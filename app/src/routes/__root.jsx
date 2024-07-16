@@ -48,14 +48,7 @@ function RootLayout() {
           </div>
         </nav>
       </div>
-      <video
-        autoPlay
-        muted
-        loop
-        className="w-full -z-10 fixed h-[93vh] object-cover"
-      >
-        <source src="/bg.mp4" type="video/mp4" />
-      </video>
+
       <Outlet />
       <TanStackRouterDevtools />
     </>
