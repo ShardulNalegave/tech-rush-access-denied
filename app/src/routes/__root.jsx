@@ -44,6 +44,13 @@ function RootLayout() {
                   Profile
                 </Link>
               </li>
+				<li><Link to="/login" className="[&.active]:border-b-2 border-yellow-500">
+					Login
+				</Link></li>
+				<li><Link to="/signup" className="[&.active]:border-b-2 border-yellow-500">
+					Signup
+				</Link></li>
+				
             </ul>
           </div>
         </nav>
