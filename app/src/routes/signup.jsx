@@ -117,11 +117,11 @@ const handleOnChange = (e) => {
 											required
 										/>
 									</div>
-									<div className="mt-6">
+									<div className="mt-6 mr-5">
 										<input
 											type="submit"
 											value="Submit"
-											className="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg cursor-pointer hover:bg-yellow-600 transition duration-300"
+											className="w-full py-3 px-4 bg-yellow-500 text-white rounded-lg cursor-pointer hover:bg-yellow-600 transition duration-300"
 										/>
 									</div>
 									<div className="text-center mt-4 text-sm font-medium text-gray-800">

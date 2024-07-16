@@ -114,7 +114,7 @@ export default function Login() {
 											className="w-full py-3 bg-yellow-500 text-white rounded-lg cursor-pointer hover:bg-amber-500"
 										/>
 									</div>
-									<div className="text-center text-sm font-medium text-gray-800 mt-6">
+									<div className="text-center text-sm font-medium text-gray-800 mt-4">
 										Don't have an account?{" "}
 										<label className="cursor-pointer text-yellow-500 hover:underline">
 											Sign up now
