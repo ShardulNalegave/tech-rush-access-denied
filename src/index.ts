@@ -1,22 +1,19 @@
 
+import dotenv from 'dotenv';
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { createClient } from 'redis';
-import MeiliSearch from 'meilisearch';
 
-const port = process.env.PORT || 8080;
+import { Logger } from './logger.js';
+
+// Load .env file
+dotenv.config();
+
+const port = process.env.MOSAICIFY_PORT || 8080;
 const app = express();
-
-const prisma = new PrismaClient();
-const redis = createClient();
-const meilisearch = new MeiliSearch({
-  host: 'http://127.0.0.1:7700',
-});
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
+  Logger.info(`Listening on port: ${port}`);
 });
