@@ -4,3 +4,31 @@
 :root {
   color-scheme: light;
 }
+@font-face {
+  font-family: "Bayon";
+  src: url("/src/assets/fonts/Bayon.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Section";
+  src: url("/src/assets/fonts/AbeeZee.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SFBOLD";
+  src: url("/src/assets/fonts/SFPRODISPLAYBOLD.OTF") format("opentype");
+}
+@font-face {
+  font-family: "SFREG";
+  src: url("/src/assets/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
+}
+.Title {
+  font-family: "Bayon";
+}
+.Section {
+  font-family: "Section";
+}
+.SFR {
+  font-family: "SFREG";
+}
+.SFB {
+  font-family: "SFBOLD";
+}
