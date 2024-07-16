@@ -14,14 +14,14 @@ function Index() {
         y: "50vh",
       },
       {
-        y: "10vh",
+        y: "12vh",
         duration: 2,
       }
     );
   }, []);
   return (
     <div className="w-full h-[93vh] overflow-hidden ">
-      <div className="w-full flex  justify-center h-1/3 items-center  ">
+      <div className="w-full flex  justify-center h-1/3 items-center -z-10  ">
         <div className="flex flex-col items-center md:h-full md:justify-evenly gap-2  ">
           <span className="text-9xl md:text-[10rem] rounded-2xl md:px-7  backdrop-blur-sm shadow-inner  p-2 drop-shadow-2xl md:mt-10  Title font-bold">
             Mosaicify

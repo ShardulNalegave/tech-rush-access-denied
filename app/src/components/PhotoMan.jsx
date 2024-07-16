@@ -18,7 +18,7 @@ const Model = () => {
       Object.keys(actions).forEach((key) => {
         actions[key].reset().play(); // Play each action
         actions[key].setLoop(THREE.LoopRepeat); // Set looping
-        actions[key].timeScale = 2; // Set speed to 2x
+        actions[key].timeScale = 1; // Set speed to 2x
       });
     }
   }, [actions]);
@@ -28,15 +28,9 @@ const Model = () => {
 
 const PhotoMan = () => {
   return (
-    <div className="w-full h-full md:h-[99%]   ">
-      <Canvas camera={{ fov: 4 }}>
-        <Suspense
-          fallback={
-            <Html>
-              <div></div>
-            </Html>
-          }
-        >
+    <div className="w-full h-full    ">
+      <Canvas camera={{ fov: 3 }}>
+        <Suspense fallback={<Html>{/* <div>Loading....</div> */}</Html>}>
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -45,8 +39,8 @@ const PhotoMan = () => {
             maxPolarAngle={Math.PI / 3}
             minPolarAngle={Math.PI / 3}
           />
-          <pointLight intensity={0.3} />
-          <spotLight intensity={6} />
+          <pointLight intensity={0.2} />
+          <spotLight intensity={8} />
           {/* <directionalLight intensity={2} /> */}
           <Model />
         </Suspense>
