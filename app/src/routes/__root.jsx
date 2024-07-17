@@ -8,8 +8,8 @@ export const Route = createRootRoute({
 function RootLayout() {
   return (
     <>
-      <div className="w-[96vw] Title h-[7vh] overflow-hidden font  flex justify-center items-center transition-all ">
-        <nav className="w-11/12 h-full flex justify-between items-center">
+      <div className=" w-[96vw] md:w-[98vw] Title h-[7vh] overflow-hidden font  flex justify-center items-center transition-all  ">
+        <nav className="w-11/12  h-full flex  justify-between items-center">
           <div className="h-full">
             <Link to="/" className="">
               <img
@@ -19,7 +19,7 @@ function RootLayout() {
             </Link>
           </div>
           <div>
-            <ul className="flex gap-3">
+            <ul className="flex gap-3 md:text-xl">
               <li>
                 <Link
                   to="/"

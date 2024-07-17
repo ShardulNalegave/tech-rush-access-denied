@@ -32,3 +32,19 @@
 .SFB {
   font-family: "SFBOLD";
 }
+html {
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  background-color: black;
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
