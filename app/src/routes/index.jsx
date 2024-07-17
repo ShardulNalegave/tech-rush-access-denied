@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import PhotoMan from "../components/PhotoMan";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
 export const Route = createFileRoute("/")({
   component: Index,
 });
@@ -19,66 +20,70 @@ function Index() {
       }
     );
   }, []);
+
   return (
     <>
-      <div id="Home" className="w-full  h-[93vh] overflow-hidden ">
+      <div id="Home" className="w-full h-screen overflow-hidden relative">
         <video
           autoPlay
           muted
           loop
-          className="w-full -z-10 absolute h-[93vh] object-cover"
+          className="w-full h-full object-cover absolute inset-0 -z-10"
         >
           <source src="/bg.mp4" type="video/mp4" />
         </video>
-        <div className="w-full flex  justify-center h-1/3 items-center -z-10  ">
-          <div className="flex flex-col items-center md:h-full md:justify-evenly gap-2  ">
-            <span className="text-9xl md:text-[10rem] rounded-2xl md:px-7  backdrop-blur-md shadow-inner  p-2 drop-shadow-3xl md:mt-10  Title font-bold">
+        <div className="w-full flex justify-center h-1/3 items-center relative">
+          <div className="flex flex-col items-center md:h-full md:justify-evenly gap-2">
+            <span className="text-6xl sm:text-7xl  2xl:text-[300px] md:text-[8rem] rounded-2xl md:px-7 backdrop-blur-md shadow-inner p-2 drop-shadow-3xl md:mt-10 Title font-bold">
               Mosaicify
             </span>
-            <p className="Section  border-black  p-2  ">
-              Where Every Picture Tells Thousand Stories.
+            <p className="Section border-black p-2 text-base sm:text-lg md:text-xl">
+              Where Every Picture Tells a Thousand Stories.
             </p>
           </div>
         </div>
-        <div id="Model" className=" overflow-hidden  w-full h-2/3">
+        <div id="Model" className="w-full h-2/3">
           <PhotoMan />
         </div>
       </div>
-      <div className="w-full h-2 bg-yellow-500 "></div>
+      <div className="w-full h-2 bg-yellow-500"></div>
       {/* Second Part */}
-      <div className=" w-[96vw] md:w-[98vw] h-[100vh]">
+      <div className="w-[100vw]  h-screen relative">
         <video
           autoPlay
           muted
           loop
-          className="w-full -z-10 absolute h-full object-cover"
+          className="w-full h-full object-cover absolute inset-0 -z-10"
         >
           <source src="/bg1000.mp4" type="video/mp4" />
         </video>
-        <div className="w-full h-full flex justify-center items-center pl-5">
-          <div className="w-[95%] h-[95%] drop-shadow-3xl border border-gray-500 shadow-inner backdrop-blur-sm rounded-3xl flex  ">
-            <div className="w-full md:w-1/2 h-full justify-evenly text-white p-4 items-center   ">
-              <div className="w-full h-2/3">
-                <h1 className="Title w-full text-shadow  text-[140px]  text-9xl">
-                  Wanna{" "}
+        <div className="w-full h-full flex justify-center items-center">
+          <div className="w-[95%] h-[95%] drop-shadow-3xl border border-gray-500 shadow-inner backdrop-blur-sm rounded-3xl flex flex-col md:flex-row">
+            <div className="w-full lg:w-1/2 h-full flex flex-col justify-evenly text-white p-4 items-center">
+              <div className="w-full h-2/3 mt-10 flex flex-col justify-center text-center">
+                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                  Wanna
                 </h1>
-                <h1 className="Title w-full text-shadow  text-[140px]  text-9xl">
-                  See{" "}
+                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                  See
                 </h1>
-                <h1 className="Title text-shadow w-full  text-[140px]  text-9xl">
-                  Amazing{" "}
+                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                  Amazing
                 </h1>
-                <h1 className="Title text-shadow w-full  text-[140px]  text-9xl">
-                  Photos ?
+                <h1 className="Title w-full text-shadow  2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                  Photos?
                 </h1>
               </div>
-              <div className="flex flex-col h-1/3 justify-evenly ">
-                <p className="Title text-yellow-500 text-4xl">
-                  <span className="text-6xl">J</span>oin MOSAICIFY NOW !!!
+              <div className="flex flex-col h-1/3 justify-evenly">
+                <p className="Title text-yellow-500 text-lg sm:text-2xl md:text-3xl">
+                  <span className="text-3xl sm:text-4xl md:text-5xl">J</span>oin
+                  MOSAICIFY NOW !!!
                 </p>
-                <p className="SFB text-lg text-justify">
-                  <span className="text-3xl text-yellow-500">A</span>t
-                  Mosaicify, we believe that a picture is worth a thousand
+                <p className="SFB overflow-hidden text-sm sm:text-base md:text-lg text-justify">
+                  <span className="  md:text-2xl lg:text-3xl text-yellow-500">
+                    A
+                  </span>
+                  t Mosaicify, we believe that a picture is worth a thousand
                   words. Our platform is designed to bring together a vibrant
                   community of photography enthusiasts, professional
                   photographers, and anyone with a love for capturing moments.
@@ -97,45 +102,42 @@ function Index() {
           </div>
         </div>
       </div>
-      <div className="w-full h-2 bg-yellow-500 "></div>
+      <div className="w-full h-2 bg-yellow-500"></div>
       {/* Third Part */}
-      <div className="w-[96vw] md:w-[98vw] h-[100vh]">
+      <div className="w-[100vw] md:w-[100vw] h-screen relative">
         <video
           autoPlay
           muted
           loop
-          className="w-full -z-10 absolute h-full object-cover"
+          className="w-full h-full object-cover absolute inset-0 -z-10"
         >
           <source src="/bg75.mp4" type="video/mp4" />
         </video>
-        <div className="w-full h-full flex justify-center items-center pl-5">
-          <div className="w-[95%] h-[95%] drop-shadow-3xl border border-gray-500 shadow-inner backdrop-blur-md rounded-3xl flex flex-row-reverse   ">
-            <div className="w-full text-right  md:w-1/2 h-full justify-evenly text-white p-4 items-center   ">
-              <div className="w-full h-2/3">
-                <h1 className="Title  w-full text-shadow  text-[140px]  text-9xl">
-                  Hmm, You{" "}
+        <div className="w-full h-full flex justify-center items-center ">
+          <div className="w-[95%] h-[95%] drop-shadow-3xl border border-gray-500 shadow-inner backdrop-blur-md rounded-3xl flex flex-col md:flex-row-reverse">
+            <div className="w-full text-right lg:w-1/2 h-full flex flex-col justify-evenly text-white p-4 items-center">
+              <div className="w-full h-2/3 flex mt-10 flex-col justify-center text-center">
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px]  ">
+                  Hmm, You
                 </h1>
-                <h1 className="Title w-full text-shadow  text-[140px]  text-9xl">
-                  Don&apos;t{" "}
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px] ">
+                  Don&apos;t
                 </h1>
-                <h1 className="Title text-shadow w-full  text-[140px]  text-9xl">
-                  Loose{" "}
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px] ">
+                  Loose
                 </h1>
-                <h1 className="Title text-shadow w-full  text-[140px]  text-9xl">
-                  Chances ?
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px] ">
+                  Chances?
                 </h1>
               </div>
-              <div className="flex flex-col h-1/3 justify-evenly ">
-                <p className="Title text-yellow-500 text-4xl">
-                  If Not,Just <span className="text-6xl">J</span>oin MOSAICIFY
-                  NOW !!!
+              <div className="flex flex-col h-1/3 justify-evenly">
+                <p className="Title text-yellow-500 text-xl sm:text-2xl md:text-4xl">
+                  If Not, Just{" "}
+                  <span className="text-4xl sm:text-4xl md:text-4xl ">J</span>
+                  oin MOSAICIFY NOW!
                 </p>
-                <div className="w-full flex justify-end items-center">
-                  <button
-                    className=" 
-                    flex justify-center items-center hover:bg-yellow-400  
-                  hover:text-black bg-yellow-500 bg-opacity-70 rounded-3xl p-4 w-5/6 h-20 border SFB text-2xl "
-                  >
+                <div className="w-full flex justify-center items-center">
+                  <button className="flex justify-center items-center hover:bg-yellow-400 hover:text-black bg-yellow-500 bg-opacity-70 rounded-3xl p-4 w-5/6 h-20 border SFB text-lg sm:text-xl md:text-2xl">
                     Join us!
                   </button>
                 </div>
@@ -143,7 +145,7 @@ function Index() {
             </div>
             <div className="hidden md:block w-1/2 h-full">
               <img
-                className="w-full h-full rounded-l-3xl object-cover opacity-75"
+                className="w-full h-full  rounded-l-3xl object-cover opacity-75"
                 src="/src/assets/bg-3.jpg"
               />
             </div>
