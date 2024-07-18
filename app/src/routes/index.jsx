@@ -61,29 +61,22 @@ function Index() {
           <div className="w-[95%] h-[95%] drop-shadow-3xl border border-gray-500 shadow-inner backdrop-blur-sm rounded-3xl flex flex-col md:flex-row">
             <div className="w-full lg:w-1/2 h-full flex flex-col justify-evenly text-white p-4 items-center">
               <div className="w-full h-2/3 mt-10 flex flex-col justify-center text-center">
-                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px]">
                   Wanna
                 </h1>
-                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px]">
                   See
                 </h1>
-                <h1 className="Title w-full text-shadow 2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px]">
                   Amazing
                 </h1>
-                <h1 className="Title w-full text-shadow  2xl:text-[150px] text-8xl md:text-7xl md:text-[140px]">
+                <h1 className="Title w-full text-shadow text-6xl md:text-7xl 2xl:text-[150px]">
                   Photos?
                 </h1>
               </div>
               <div className="flex flex-col h-1/3 justify-evenly">
-                <p className="Title text-yellow-500 text-lg sm:text-2xl md:text-3xl">
-                  <span className="text-3xl sm:text-4xl md:text-5xl">J</span>oin
-                  MOSAICIFY NOW !!!
-                </p>
-                <p className="SFB overflow-hidden text-sm sm:text-base md:text-lg text-justify">
-                  <span className="  md:text-2xl lg:text-3xl text-yellow-500">
-                    A
-                  </span>
-                  t Mosaicify, we believe that a picture is worth a thousand
+                <p className="SFB overflow-hidden text-sm sm:text-base md:text-xl text-justify">
+                  At Mosaicify, we believe that a picture is worth a thousand
                   words. Our platform is designed to bring together a vibrant
                   community of photography enthusiasts, professional
                   photographers, and anyone with a love for capturing moments.
