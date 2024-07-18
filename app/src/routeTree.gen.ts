@@ -12,8 +12,13 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
+<<<<<<< Updated upstream
 import { Route as FeedImport } from './routes/feed'
+=======
+import { Route as EditprofileImport } from './routes/edit_profile'
+>>>>>>> Stashed changes
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
@@ -24,13 +29,23 @@ const SignupRoute = SignupImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ProfileRoute = ProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LoginRoute = LoginImport.update({
   path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
+<<<<<<< Updated upstream
 const FeedRoute = FeedImport.update({
   path: '/feed',
+=======
+const EditprofileRoute = EditprofileImport.update({
+  path: '/edit_profile',
+>>>>>>> Stashed changes
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -62,11 +77,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+<<<<<<< Updated upstream
     '/feed': {
       id: '/feed'
       path: '/feed'
       fullPath: '/feed'
       preLoaderRoute: typeof FeedImport
+=======
+    '/edit_profile': {
+      id: '/edit_profile'
+      path: '/edit_profile'
+      fullPath: '/edit_profile'
+      preLoaderRoute: typeof EditprofileImport
+>>>>>>> Stashed changes
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -74,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
     '/signup': {
@@ -91,8 +121,13 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AboutRoute,
+<<<<<<< Updated upstream
   FeedRoute,
+=======
+  EditprofileRoute,
+>>>>>>> Stashed changes
   LoginRoute,
+  ProfileRoute,
   SignupRoute,
 })
 
@@ -106,8 +141,13 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/about",
+<<<<<<< Updated upstream
         "/feed",
+=======
+        "/edit_profile",
+>>>>>>> Stashed changes
         "/login",
+        "/profile",
         "/signup"
       ]
     },
@@ -117,11 +157,19 @@ export const routeTree = rootRoute.addChildren({
     "/about": {
       "filePath": "about.jsx"
     },
+<<<<<<< Updated upstream
     "/feed": {
       "filePath": "feed.jsx"
+=======
+    "/edit_profile": {
+      "filePath": "edit_profile.jsx"
+>>>>>>> Stashed changes
     },
     "/login": {
       "filePath": "login.jsx"
+    },
+    "/profile": {
+      "filePath": "profile.jsx"
     },
     "/signup": {
       "filePath": "signup.jsx"
