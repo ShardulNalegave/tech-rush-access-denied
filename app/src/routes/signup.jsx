@@ -54,7 +54,7 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
-      <div className="relative rounded-lg max-w-[850px] w-full bg-white p-10 shadow-lg">
+      <div className="relative rounded-lg max-w-[80vw] w-full bg-white p-10 shadow-lg">
         <div className="absolute top-0 left-1/2 h-full w-1/2 z-[99] hidden lg:block">
           <div className="absolute top-0 left-0 h-full w-full z-[10]">
             <div className="absolute rounded-r-md top-0 left-0 h-full w-full bg-black opacity-50 z-[12]" />
