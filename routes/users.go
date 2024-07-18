@@ -18,6 +18,8 @@ func mountUsersRoutes(r *chi.Mux) {
 	r.Get("/users/{userID}", getUser)
 	r.Get("/users/{userID}/followers", getFollowers)
 	r.Get("/users/{userID}/following", getFollowing)
+	r.Get("/users/{userID}/likedPosts", likedPosts)
+	r.Post("/users/{userID}/follow", addFollow)
 }
 
 func getLoggedInUser(w http.ResponseWriter, r *http.Request) {
@@ -113,6 +115,7 @@ func getFollowers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.WriteHeader(http.StatusOK)
 	w.Write(byts)
 }
 
@@ -133,4 +136,61 @@ func getFollowing(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(byts)
+}
+
+func likedPosts(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	users := make([]models.Post, 0)
+	query := `SELECT P.* FROM post_likes PL INNER JOIN posts P ON P.id = PL.post_id WHERE PL.user_id = $1`
+	if err := db.Select(&users, query, userID); err != nil {
+		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
+	}
+
+	byts, err := json.Marshal(users)
+	if err != nil {
+		http.Error(w, "JSON marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(byts)
+}
+
+func addFollow(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	tx, err := db.Beginx()
+	if err != nil {
+		http.Error(w, "Couldn't follow", http.StatusInternalServerError)
+		return
+	}
+
+	tx.Exec(`
+		UPDATE users
+		SET following_count = following_count + 1
+		WHERE id = $1
+	`, s.UserID)
+	tx.Exec(`
+		UPDATE users
+		SET follower_count = follower_count + 1
+		WHERE id = $1
+	`, userID)
+	tx.Exec(`INSERT INTO followers(user_id, follower_id) VALUES ($1, $2)`, userID, s.UserID)
+
+	err = tx.Commit()
+	if err != nil {
+		http.Error(w, "Couldn't follow", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Done"))
 }
