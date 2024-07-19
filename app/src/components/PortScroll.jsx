@@ -60,51 +60,27 @@ function Pages() {
     <>
       <Page
         position={[-width * 1, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/1.jpg", "/imgs/2.jpg", "/imgs/3.jpg"]}
       />
       <Page
         position={[width * 0, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/1.jpg", "/imgs/2.jpg", "/imgs/3.jpg"]}
       />
       <Page
         position={[width * 1, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/4.jpg", "/imgs/5.jpg", "/imgs/6.jpg"]}
       />
       <Page
         position={[width * 2, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/7.jpg", "/imgs/8.jpg", "/imgs/9.jpg"]}
       />
       <Page
         position={[width * 3, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/1.jpg", "/imgs/2.jpg", "/imgs/3.jpg"]}
       />
       <Page
         position={[width * 4, 0, 0]}
-        urls={[
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-          "/src/assets/bg203.jpeg",
-        ]}
+        urls={["/imgs/4.jpg", "/imgs/6.jpg", "/imgs/7.jpg"]}
       />
     </>
   );

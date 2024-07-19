@@ -51,7 +51,7 @@ function Portofolio() {
                 <h1 className="text-9xl text-white Title">Jose</h1>
                 <h1 className="text-9xl text-white Title">Mourinho</h1>
               </div>
-              <p className="SFB text-2xl leading-10 text-white">
+              <p className="SFB text-lg leading-10 text-white">
                 I&apos;m a 24 year old guy being Photographer, Videographer
                 I&apos;m currently working with Apple to improve its camera
                 quality.
@@ -107,9 +107,10 @@ function Portofolio() {
         </div>
       </div>
       <div className="w-[100vw] h-2 bg-yellow-500" />
+      {/* Second Section */}
       <div className="w-[100vw] h-[100vh]"></div>
       <div className="w-[100vw] h-2 bg-yellow-500" />
-
+      {/* Third Section */}
       <div
         id="Scroll"
         className="w-[100vw]  h-[100vh] overflow-x-auto overflow-y-hidden"

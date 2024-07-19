@@ -66,7 +66,7 @@ function RootLayout() {
       </div>
 
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
     </>
   );
 }
