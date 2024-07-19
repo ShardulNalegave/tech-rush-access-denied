@@ -57,7 +57,7 @@ export default function edit_profile() {
 						</button>
 					</form>
 				</div>
-			</div>
+      		</div>
 		</div>
 	);
 }
