@@ -21,6 +21,7 @@ func mountPostsRoutes(r *chi.Mux) {
 	r.Post("/posts/{postID}/addLike", likePost)
 	r.Get("/posts/{postID}/comments", postComments)
 	r.Post("/posts/{postID}/addComment", addComment)
+	r.Delete("/posts/{postID}", deletePost)
 }
 
 func getLoggedInUserPosts(w http.ResponseWriter, r *http.Request) {
@@ -93,6 +94,66 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
+}
+
+func deletePost(w http.ResponseWriter, r *http.Request) {
+	postID := chi.URLParam(r, "postID")
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	var postedByID uint64
+	row := db.QueryRow(`SELECT posted_by FROM posts WHERE id = $1 LIMIT 1`, postID)
+	if err := row.Err(); err != nil {
+		http.Error(w, "Post doesn't exist", http.StatusNotFound)
+		return
+	}
+	if err := row.Scan(&postedByID); err != nil {
+		http.Error(w, "Couldn't fetch post", http.StatusInternalServerError)
+		return
+	}
+
+	if s.UserID != postedByID {
+		http.Error(w, "Cannot delete post made by other users", http.StatusUnauthorized)
+		return
+	}
+
+	tx, err := db.Beginx()
+	if err != nil {
+		http.Error(w, "Could not create a database transaction", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec(`DELETE FROM post_likes WHERE post_id = $1`, postID)
+	if err != nil {
+		http.Error(w, "Error deleting likes", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec(`DELETE FROM comments WHERE post_id = $1`, postID)
+	if err != nil {
+		http.Error(w, "Error deleting comments", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec(`DELETE FROM posts WHERE id = $1`, postID)
+	if err != nil {
+		http.Error(w, "Error deleting post record", http.StatusInternalServerError)
+		return
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		http.Error(w, "Couldn't commit database transaction", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Done"))
 }
 
 func getPostLikes(w http.ResponseWriter, r *http.Request) {
