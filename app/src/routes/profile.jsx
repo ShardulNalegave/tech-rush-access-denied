@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import Popup from "reactjs-popup";
+
 
 export const Route = createFileRoute('/profile')({
   component: profile
@@ -6,8 +8,26 @@ export const Route = createFileRoute('/profile')({
 
 import React from 'react'
 import sampleImages from "../sampleImages"
+import { useState } from 'react';
 
 export default function profile() {
+	const [open, setOpen] = useState(false);
+	const [selectedImage, setSelectedImage] = useState(null);
+	 const [liked, setLiked] = useState(false);
+
+	const handleImageClick = (image) => {
+		setSelectedImage(image);
+		setOpen(true);
+	};
+
+	const closeModal = () => {
+		setOpen(false);
+		setSelectedImage(null);
+	};
+
+	 const toggleLike = () => {
+			setLiked(!liked);
+		};
   return (
 		<div className="flex flex-col items-center pt-10 border-t">
 			<img
@@ -45,6 +65,7 @@ export default function profile() {
 						<div
 							key={image.id}
 							className="relative overflow-hidden rounded-lg shadow-md hover:scale-105 hover:shadow-xl transition duration-100"
+							onClick={() => handleImageClick(image)}
 						>
 							<img
 								src={image.url}
@@ -58,6 +79,41 @@ export default function profile() {
 					))}
 				</div>
 			</div>
+			<Popup
+				open={open}
+				closeOnDocumentClick
+				onClose={closeModal}
+				className="rounded-md h-[50vh] w-[70vw]"
+			>
+				<div className="bg-white border-2 p-6 rounded-md relative shadow-2xl shadow-slate-900">
+					<button
+						className="absolute top-2 right-2 p-1 px-2 text-2xl text-gray-500 hover:text-gray-800"
+						onClick={closeModal}
+					>
+						&times;
+					</button>
+					{selectedImage && (
+						<div className="flex flex-col items-center">
+							<p className="text-gray-900 text-xl font-semibold mb-2">
+								{selectedImage.title}
+							</p>
+							<img
+								src={selectedImage.url}
+								alt={selectedImage.title}
+								className="w-full h-full object-cover border-dotted border-gray-600 border-2 rounded-lg mb-4"
+							/>
+							<button
+								className={`px-4 py-2 rounded-full text-white transition duration-200 ${
+									liked ? "bg-red-500" : "bg-gray-400"
+								}`}
+								onClick={toggleLike}
+							>
+								{liked ? "Liked " : "Like"}
+							</button>
+						</div>
+					)}
+				</div>
+			</Popup>
 		</div>
 	);
 }
