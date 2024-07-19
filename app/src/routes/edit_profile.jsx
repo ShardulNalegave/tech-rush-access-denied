@@ -1,12 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/edit_profile")({
-	component: edit_profile,
+  component: Edit_profile,
 });
 
-import React from 'react';
+import React from "react";
 
-export default function edit_profile() {
+export default function Edit_profile() {
   return (
 		<div className="container mx-auto my-6">
 			<div className="flex justify-center">

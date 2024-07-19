@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ShardulNalegave/tech-rush-access-denied/auth"
 	"github.com/ShardulNalegave/tech-rush-access-denied/database"
 	"github.com/ShardulNalegave/tech-rush-access-denied/routes"
+	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
@@ -28,9 +30,13 @@ func main() {
 	}
 
 	db := database.ConnectToDatabase()
+	sm := sessions.NewSessionManager()
 
 	r := chi.NewRouter()
+	r.Use(auth.SecureCookieMiddleware())
 	r.Use(database.DatabaseMiddleware(db))
+	r.Use(sessions.SessionManagerMiddleware(sm))
+	r.Use(auth.AuthMiddleware())
 	routes.MountRoutes(r)
 
 	log.Info().

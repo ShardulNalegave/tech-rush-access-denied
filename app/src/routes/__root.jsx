@@ -8,7 +8,7 @@ export const Route = createRootRoute({
 function RootLayout() {
   return (
     <>
-      <div className=" w-[96vw] md:w-[98vw] Title h-[7vh] overflow-hidden font  flex justify-center items-center transition-all  ">
+      <div className=" w-[100vw] bg-white border-gray-600 shadow-2xl  Title h-[7vh] backdrop-blur-2xl border-b  overflow-hidden font  flex justify-center items-center transition-all  ">
         <nav className="w-11/12  h-full flex  justify-between items-center">
           <div className="h-full">
             <Link to="/" className="">
@@ -30,19 +30,19 @@ function RootLayout() {
               </li>
               <li>
                 <Link
-                  to="/about"
+                  to="/portofolio"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Portfolio
                 </Link>
               </li>
               <li>
-                <Link
+                {/* <Link
                   to="/about"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Profile
-                </Link>
+                </Link> */}
               </li>
               <li>
                 <Link
@@ -66,7 +66,7 @@ function RootLayout() {
       </div>
 
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
     </>
   );
 }
