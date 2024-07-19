@@ -7,7 +7,6 @@ type User struct {
 	Email          string  `db:"email" json:"email"`
 	Bio            *string `db:"bio" json:"bio"`
 	About          *string `db:"about" json:"about"`
-	ProfilePic     *string `db:"profile_pic" json:"profile_pic"`
 	FollowerCount  uint64  `db:"follower_count" json:"follower_count"`
 	FollowingCount uint64  `db:"following_count" json:"following_count"`
 }

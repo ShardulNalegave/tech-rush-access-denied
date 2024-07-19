@@ -2,7 +2,7 @@
 # Mosaicify
 Where every picture tells a thousand stories.
 
-Mosaicify is a Photo Gallery and sharing app built as our project or the PISC (PICT IEEE Student Chapter) organised Hackathon, Tech Rush.
+Mosaicify is a Photo Gallery and sharing app built as our project for the PISC (PICT IEEE Student Chapter) organised Hackathon - Tech Rush.
 
 ## Getting Started
 // TODO

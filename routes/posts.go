@@ -2,8 +2,11 @@ package routes
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
 
 	"github.com/ShardulNalegave/tech-rush-access-denied/models"
@@ -11,16 +14,18 @@ import (
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
 	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 func mountPostsRoutes(r *chi.Mux) {
 	r.Get("/posts", getPosts)
+	r.Post("/posts", createPost)
 	r.Get("/posts/current", getLoggedInUserPosts)
 	r.Get("/posts/{postID}", getPost)
 	r.Get("/posts/{postID}/likes", getPostLikes)
-	r.Post("/posts/{postID}/addLike", likePost)
+	r.Post("/posts/{postID}/likes", likePost)
 	r.Get("/posts/{postID}/comments", postComments)
-	r.Post("/posts/{postID}/addComment", addComment)
+	r.Post("/posts/{postID}/comments", addComment)
 	r.Delete("/posts/{postID}", deletePost)
 }
 
@@ -96,6 +101,83 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
+func createPost(w http.ResponseWriter, r *http.Request) {
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	baseDir := os.Getenv("MOSAICIFY_STORAGE_DIR")
+	if baseDir == "" {
+		log.Fatal().Msg("MOSAICIFY_STORAGE_DIR was not provided")
+	}
+
+	var body struct {
+		Caption string  `json:"caption"`
+		Data    *string `json:"data"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	query := `
+		INSERT INTO posts(posted_by, caption)
+		VALUES ($1, $2)
+		RETURNING id
+	`
+	row := db.QueryRow(query, s.UserID, body.Caption)
+	if err := row.Err(); err != nil {
+		http.Error(w, "Couldn't create post", http.StatusInternalServerError)
+		return
+	}
+
+	var pID uint64
+	if err := row.Scan(&pID); err != nil {
+		http.Error(w, "Couldn't create post", http.StatusInternalServerError)
+		return
+	}
+
+	fname := strconv.Itoa(int(pID))
+	fpath := path.Join(baseDir, "posts", fname)
+
+	byts, err := base64.StdEncoding.DecodeString(*body.Data)
+	if err != nil {
+		http.Error(w, "Could not decode provided image", http.StatusBadRequest)
+		return
+	}
+
+	f, err := os.Create(fpath)
+	if err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+	defer f.Close()
+
+	if _, err := f.Write(byts); err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+
+	if err := f.Sync(); err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+
+	data, _ := json.Marshal(models.Post{
+		ID:       pID,
+		Caption:  body.Caption,
+		PostedBy: s.UserID,
+		Likes:    0,
+	})
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+}
+
 func deletePost(w http.ResponseWriter, r *http.Request) {
 	postID := chi.URLParam(r, "postID")
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
@@ -119,6 +201,17 @@ func deletePost(w http.ResponseWriter, r *http.Request) {
 
 	if s.UserID != postedByID {
 		http.Error(w, "Cannot delete post made by other users", http.StatusUnauthorized)
+		return
+	}
+
+	baseDir := os.Getenv("MOSAICIFY_STORAGE_DIR")
+	if baseDir == "" {
+		log.Fatal().Msg("MOSAICIFY_STORAGE_DIR was not provided")
+	}
+
+	fpath := path.Join(baseDir, "posts", postID)
+	if err := os.Remove(fpath); err != nil {
+		http.Error(w, "Could not delete post image", http.StatusInternalServerError)
 		return
 	}
 

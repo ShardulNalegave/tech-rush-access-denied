@@ -2,18 +2,26 @@ package routes
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
+	"path"
+	"strconv"
 
 	"github.com/ShardulNalegave/tech-rush-access-denied/models"
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
 	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 func mountUsersRoutes(r *chi.Mux) {
 	r.Get("/users/current", getLoggedInUser)
+	r.Put("/users/current", updateUserProfile)
+	r.Post("/users/current/profilePic", setProfilePic)
 	r.Get("/users", getAllUsers)
 	r.Get("/users/{userID}", getUser)
 	r.Get("/users/{userID}/followers", getFollowers)
@@ -27,13 +35,7 @@ func getLoggedInUser(w http.ResponseWriter, r *http.Request) {
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
 
 	if !ok {
-		byts, err := json.Marshal(nil)
-		if err != nil {
-			http.Error(w, "JSON marshalling error", http.StatusInternalServerError)
-			return
-		}
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write(byts)
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
 		return
 	}
 
@@ -55,6 +57,125 @@ func getLoggedInUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(byts)
+}
+
+func updateUserProfile(w http.ResponseWriter, r *http.Request) {
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	var body struct {
+		Name  *string `json:"name"`
+		Bio   *string `json:"bio"`
+		About *string `json:"about"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	var user models.User
+	if err := db.Get(&user, "SELECT U.name, U.bio, U.about FROM users U WHERE id = $1 LIMIT 1", s.UserID); err != nil {
+		if err == sql.ErrNoRows {
+			http.Error(w, "No such user found", http.StatusNotFound)
+			return
+		}
+
+		http.Error(w, "Could not fetch user", http.StatusInternalServerError)
+		return
+	}
+
+	if body.Name != nil {
+		user.Name = *body.Name
+	}
+	if body.Bio != nil {
+		user.Bio = body.Bio
+	}
+	if body.About != nil {
+		user.About = body.About
+	}
+
+	query := `
+		UPDATE users
+		SET name = $1, bio = $2, about = $3
+		WHERE id = $4
+	`
+	_, err := db.Exec(query, user.Name, user.Bio, user.About, s.UserID)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Could not update profile", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Done"))
+}
+
+func setProfilePic(w http.ResponseWriter, r *http.Request) {
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	var body struct {
+		Data *string `json:"data"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	baseDir := os.Getenv("MOSAICIFY_STORAGE_DIR")
+	if baseDir == "" {
+		log.Fatal().Msg("MOSAICIFY_STORAGE_DIR was not provided")
+	}
+
+	fname := strconv.Itoa(int(s.UserID))
+	fpath := path.Join(baseDir, "profile_pics", fname)
+
+	if body.Data == nil {
+		if err := os.Remove(fpath); err != nil {
+			if err != os.ErrNotExist {
+				fmt.Println(err)
+			}
+		}
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Done"))
+		return
+	}
+
+	byts, err := base64.StdEncoding.DecodeString(*body.Data)
+	if err != nil {
+		http.Error(w, "Could not decode provided image", http.StatusBadRequest)
+		return
+	}
+
+	f, err := os.Create(fpath)
+	if err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+	defer f.Close()
+
+	if _, err := f.Write(byts); err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+
+	if err := f.Sync(); err != nil {
+		http.Error(w, "Could not save image", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Done"))
 }
 
 func getAllUsers(w http.ResponseWriter, r *http.Request) {
@@ -165,6 +286,17 @@ func addFollow(w http.ResponseWriter, r *http.Request) {
 
 	if !ok {
 		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	uID, err := strconv.Atoi(userID)
+	if err != nil {
+		http.Error(w, "Invalid 'userID' provided", http.StatusBadRequest)
+		return
+	}
+
+	if s.UserID == uint64(uID) {
+		http.Error(w, "Cannot follow yourself", http.StatusUnauthorized)
 		return
 	}
 
