@@ -27,7 +27,7 @@ export default function Profile() {
     setLiked(!liked);
   };
   return (
-    <div className="flex flex-col items-center pt-10 border-t">
+    <div className="flex flex-col Section items-center pt-10 border-t">
       <img
         className="rounded-full w-40 h-40 mb-4"
         src="https://images.unsplash.com/photo-1577546568088-eb32790be7ec?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -57,7 +57,7 @@ export default function Profile() {
           Saved
         </button>
       </div>
-      <div className="mt-5 mx-20">
+      <div className="mt-5 mx-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {sampleImages.map((image) => (
             <div
