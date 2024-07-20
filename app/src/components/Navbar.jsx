@@ -21,7 +21,7 @@ export default function Navbar() {
           },
           {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.25,
           }
         )
       : gsap.fromTo(
@@ -31,7 +31,7 @@ export default function Navbar() {
           },
           {
             opacity: 0,
-            duration: 0.5,
+            duration: 0.25,
           }
         );
   };
