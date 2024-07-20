@@ -54,3 +54,35 @@ export const getUserLikedPosts = (id: string) => queryOptions({
     }
   },
 });
+
+export const updateUserProfile = (payload : {
+  name: string,
+  bio: string,
+  about: string,
+}) => queryOptions({
+  queryKey: ['updateUserProfile'],
+  queryFn: async () => {
+    const res = await fetch(`${backendURL}/users/current`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+    
+    return res.status === 200;
+  },
+});
+
+export const updateUserProfilePic = (payload : {
+  data: string,
+}) => queryOptions({
+  queryKey: ['updateUserProfile'],
+  queryFn: async () => {
+    const res = await fetch(`${backendURL}/users/current/profilePic`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+    
+    return res.status === 200;
+  },
+});

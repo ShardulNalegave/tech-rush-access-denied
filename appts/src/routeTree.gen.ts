@@ -15,6 +15,8 @@ import { Route as FeedImport } from './routes/feed'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileEditImport } from './routes/profile.edit'
 import { Route as ProfileUserIDImport } from './routes/profile.$userID'
+import { Route as PostsCreateImport } from './routes/posts.create'
+import { Route as PostsPostIDImport } from './routes/posts.$postID'
 import { Route as PortfolioUserIDImport } from './routes/portfolio.$userID'
 import { Route as AuthSignupImport } from './routes/auth.signup'
 import { Route as AuthLoginImport } from './routes/auth.login'
@@ -38,6 +40,16 @@ const ProfileEditRoute = ProfileEditImport.update({
 
 const ProfileUserIDRoute = ProfileUserIDImport.update({
   path: '/profile/$userID',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsCreateRoute = PostsCreateImport.update({
+  path: '/posts/create',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIDRoute = PostsPostIDImport.update({
+  path: '/posts/$postID',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,6 +107,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioUserIDImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$postID': {
+      id: '/posts/$postID'
+      path: '/posts/$postID'
+      fullPath: '/posts/$postID'
+      preLoaderRoute: typeof PostsPostIDImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/create': {
+      id: '/posts/create'
+      path: '/posts/create'
+      fullPath: '/posts/create'
+      preLoaderRoute: typeof PostsCreateImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/$userID': {
       id: '/profile/$userID'
       path: '/profile/$userID'
@@ -120,6 +146,8 @@ export const routeTree = rootRoute.addChildren({
   AuthLoginRoute,
   AuthSignupRoute,
   PortfolioUserIDRoute,
+  PostsPostIDRoute,
+  PostsCreateRoute,
   ProfileUserIDRoute,
   ProfileEditRoute,
 })
@@ -137,6 +165,8 @@ export const routeTree = rootRoute.addChildren({
         "/auth/login",
         "/auth/signup",
         "/portfolio/$userID",
+        "/posts/$postID",
+        "/posts/create",
         "/profile/$userID",
         "/profile/edit"
       ]
@@ -155,6 +185,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/portfolio/$userID": {
       "filePath": "portfolio.$userID.tsx"
+    },
+    "/posts/$postID": {
+      "filePath": "posts.$postID.tsx"
+    },
+    "/posts/create": {
+      "filePath": "posts.create.tsx"
     },
     "/profile/$userID": {
       "filePath": "profile.$userID.tsx"

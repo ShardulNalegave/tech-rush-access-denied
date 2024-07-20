@@ -1,5 +1,6 @@
-import { IPost } from "../query/models";
-import { backendURL } from "../query/query";
+
+import { IPost } from '../query/models';
+import { backendURL } from '../query/query';
 
 export default function ImageGrid({ posts } : { posts: IPost[] }) {
   return (
