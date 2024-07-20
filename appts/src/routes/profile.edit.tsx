@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { AuthRequired } from '../components/auth';
 
 export const Route = createFileRoute('/profile/edit')({
-  component: EditProfilePage,
+  component: () => <AuthRequired><EditProfilePage /></AuthRequired>,
 })
 
 function EditProfilePage() {

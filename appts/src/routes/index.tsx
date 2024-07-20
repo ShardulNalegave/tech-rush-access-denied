@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { UnAuthRequired } from '../components/auth';
 
 export const Route = createFileRoute('/')({
-  component: Index,
+  component: () => <UnAuthRequired><Index /></UnAuthRequired>,
 })
 
 function Index() {

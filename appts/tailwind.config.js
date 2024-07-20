@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['"ABeeZee"'],
+        body: ['"ABeeZee"'],
+        heading: ['"Bayon"'],
+        sfb: ['"SFB"'],
+        sfr: ['"SFR"'],
+      },
+    },
   },
   plugins: [],
 }

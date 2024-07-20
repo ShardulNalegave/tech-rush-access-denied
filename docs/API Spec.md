@@ -50,7 +50,7 @@ Allows the currently logged in user to create a new post
 - GET - `/posts/current` \
 Get posts by currently logged in user
 
-- GET - `/posts/current` \
+- GET - `/posts/current/feed` \
 Get feed posts for currently logged in user
 
 - GET - `/posts/{postID}` \

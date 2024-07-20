@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { UnAuthRequired } from '../components/auth';
 
 export const Route = createFileRoute('/auth/signup')({
-  component: AuthSignUpPage,
+  component: () => <UnAuthRequired><AuthSignUpPage /></UnAuthRequired>,
 })
 
 function AuthSignUpPage() {

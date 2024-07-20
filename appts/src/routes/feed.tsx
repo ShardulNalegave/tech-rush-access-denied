@@ -1,9 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { AuthRequired } from '../components/auth';
+import { getFeedPosts } from '../query/posts';
+import ImageGrid from '../components/imageGrid';
 
 export const Route = createFileRoute('/feed')({
-  component: FeedPage,
+  component: () => <AuthRequired><FeedPage /></AuthRequired>,
 });
 
 function FeedPage() {
-  return <div>Hello /feed!</div>;
+  const { isPending, data } = useQuery(getFeedPosts());
+
+  if (isPending) return <></>;
+  return <ImageGrid posts={data || []} />;
 }
