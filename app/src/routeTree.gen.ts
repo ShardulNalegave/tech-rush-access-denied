@@ -22,11 +22,6 @@ import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const TestRoute = TestImport.update({
-  path: '/test',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const SignupRoute = SignupImport.update({
   path: '/signup',
   getParentRoute: () => rootRoute,
@@ -127,13 +122,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -148,7 +136,6 @@ export const routeTree = rootRoute.addChildren({
   PortofolioRoute,
   ProfileRoute,
   SignupRoute,
-  TestRoute,
 })
 
 /* prettier-ignore-end */
@@ -166,8 +153,7 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/portofolio",
         "/profile",
-        "/signup",
-        "/test"
+        "/signup"
       ]
     },
     "/": {
@@ -193,9 +179,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/signup": {
       "filePath": "signup.jsx"
-    },
-    "/test": {
-      "filePath": "test.jsx"
     }
   }
 }
