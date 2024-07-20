@@ -23,7 +23,10 @@ function Index() {
 
   return (
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
-      <div id="Home" className="w-full h-screen overflow-hidden relative snap-start">
+      <div
+        id="Home"
+        className="w-full h-screen overflow-hidden relative snap-start"
+      >
         <video
           autoPlay
           muted
