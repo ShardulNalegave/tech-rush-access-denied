@@ -10,12 +10,12 @@ export const Route = createRootRoute({
 
 const SearchBar = () => {
   return (
-    <div className="h-5/6   rounded-2xl border-2 flex shadow-lg    items-center w-1/3 lg:w-1/2 p-1 lg:p-0  ">
-      <img className="h-2/3  w-1/6 " src="src/assets/icons/search.svg" />
+    <div className="h-5/6 rounded-2xl border-2 flex shadow-lg items-center w-1/3 lg:w-1/2 p-1 lg:p-0  ">
+      <img className="h-2/3 w-1/6" src="src/assets/icons/search.svg" />
       <input
         placeholder="Search Here!"
         type="text"
-        className="  lg:text-xl   text-md outline-none h-5/6 rounded-2xl p-4  w-5/6 "
+        className="lg:text-xl placeholder:text-gray-200 text-md outline-none h-5/6 rounded-2xl p-4  w-5/6 "
       />
     </div>
   );
@@ -97,7 +97,7 @@ function RootLayout() {
               </li>
               <li>
                 <Link
-                  to="/login"
+                  to="/auth/login"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Login
@@ -105,7 +105,7 @@ function RootLayout() {
               </li>
               <li>
                 <Link
-                  to="/signup"
+                  to="/auth/signup"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Signup

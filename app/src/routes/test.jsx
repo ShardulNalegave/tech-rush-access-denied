@@ -1,45 +1,46 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef,useEffect } from "react";
-import PhotoMan from "../components/PhotoMan";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import sampleImages from "../sampleImages";
 
 export const Route = createFileRoute("/test")({
 	component: test,
 });
 
-function test() {
-	const sliderRef = useRef(null);
+import React from 'react'
 
-	useEffect(() => {
-		const slider = sliderRef.current;
-		let intervalId;
-
-		const startSlider = () => {
-			intervalId = setInterval(() => {
-				slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' });
-				if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
-					slider.scrollTo({ left: 0, behavior: 'smooth' });
-				}
-			}, 3000); // Change slide every 3 seconds
-		};
-
-		startSlider();
-
-		return () => {
-			clearInterval(intervalId);
-		};
-	}, []);
-
-	return (
-		<div className="overflow-hidden relative w-full">
-			<div ref={sliderRef} className="flex overflow-x-auto w-full">
-				{sampleImages.map((url, index) => (
-					<div key={index} className="flex-shrink-0 w-full">
-						<img src={url} className="w-full" />
-					</div>
-				))}
+export default function test() {
+  return (
+		<div className="bg-cyan-100 h-screen max-w-[100vw] items-center justify-center flex ">
+			<div className=" lg:flex-1">
+				<img
+					src="/imgs/1.jpg"
+					className="h-[70vh] w-[19vw] z-[10] rounded-2xl object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 absolute top-[9rem] left-[240px] hidden lg:block"
+					alt=""
+				/>
+				<img
+					src="/imgs/8.jpg"
+					className="h-[40vh] w-[15vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-2xl absolute top-[23rem] left-20 hidden lg:block"
+					alt=""
+				/>
+				<img
+					src="/imgs/5.jpg"
+					className="h-[50vh] w-[17vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-2xl absolute top-[12rem] left-[400px] hidden lg:block"
+					alt=""
+				/>
+				<img
+					src="/imgs/9.jpg"
+					className="h-[30vh] w-[14vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-full absolute top-16 left-24 hidden lg:block"
+					alt=""
+				/>
+			</div>
+			<div className="flex-1 flex flex-col justify-center items-center px-10">
+				<h3 className="text-6xl font-bold text-red-700">
+					Search for an Idea!!
+				</h3>
+				<p className=" py-4">
+					What do you want to try next? Think of something you’re into—and see what you find.
+			  </p>
+			  <button className="bg-red-700 px-4 py-2 rounded-3xl text-white font-semibold hover:bg-red-600 hover:scale-105 transition duration-300">Explore</button>
 			</div>
 		</div>
 	);
