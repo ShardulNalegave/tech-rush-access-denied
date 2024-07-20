@@ -80,7 +80,7 @@ export default function Profile() {
       >
         {selectedImage && (
           <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg max-w-[90vw] md:max-w-[80vw] h-[80vh] relative top-3 shadow-lg flex flex-col md:flex-row items-center justify-center">
+            <div className="bg-white rounded-lg max-w-[90vw] md:max-w-[80vw] h-[90vh] relative top-3 shadow-lg flex flex-col md:flex-row items-center justify-center">
               <button
                 className="absolute top-2 right-2 md:-right-10 px-2 text-2xl text-gray-200 hover:text-white"
                 onClick={closeModal}
@@ -91,7 +91,7 @@ export default function Profile() {
                 <img
                   src={selectedImage.url}
                   alt={selectedImage.title}
-                  className="w-full h-full object-cover rounded-md"
+                  className="w-full h-full sm:h-[80%] object-cover rounded-md"
                 />
               </div>
               <div className="w-full md:w-1/2 flex flex-col p-4 text-gray-900 h-full">

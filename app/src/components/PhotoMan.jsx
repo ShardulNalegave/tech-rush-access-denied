@@ -30,7 +30,7 @@ const PhotoMan = () => {
   return (
     <div className="w-full h-full    ">
       <Canvas camera={{ fov: 3 }}>
-        <Suspense fallback={<Html>{/* <div>Loading....</div> */}</Html>}>
+        <Suspense fallback={null}>
           <OrbitControls
             enableZoom={false}
             enablePan={false}
