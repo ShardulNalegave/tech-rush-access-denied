@@ -35,7 +35,7 @@ function RootLayout() {
           },
           {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.25,
           }
         )
       : gsap.fromTo(
@@ -45,7 +45,7 @@ function RootLayout() {
           },
           {
             opacity: 0,
-            duration: 0.5,
+            duration: 0.25,
           }
         );
   };

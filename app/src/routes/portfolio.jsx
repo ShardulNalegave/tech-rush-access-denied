@@ -119,6 +119,50 @@ function Portofolio() {
       </div>
       <hr className="bg-yellow-500 h-2" />
       {/* Second Section */}
+      <div className=" relative  bg-black bg-opacity-50 overflow-hidden w-[100vw] h-[93vh] snap-start">
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-full h-full object-cover absolute -z-10 "
+        >
+          <source src="/bg112.mp4" type="video/mp4" />
+        </video>
+        <div className=" p-4 w-full h-full flex justify-center items-center">
+          <div className="w-[95%] rounded-3xl lg:rounded-full lg:p-28  h-[85%] backdrop-blur-xl border border-gray-300 shadow-2xl p-5 drop-shadow-2xl  ">
+            <div className="Title flex justify-center text-9xl lg:text-[180px] text-white">
+              <h1 className="">About m & </h1>
+            </div>
+            <div>
+              <p className="text-sm Section lg:text-xl text-white">
+                John Smith is a passionate photographer with over a decade of
+                experience capturing stunning landscapes and intimate portraits.
+                His work has been featured in various international magazines
+                and exhibitions. John&apos;s unique ability to blend natural
+                light with creative compositions sets his photography apart,
+                making each image a work of art.
+              </p>
+              <div className=" Title flex justify-center text-white text-3xl pt-3 pl-5 ">
+                Contact me:
+              </div>
+              <div className=" justify-center flex pl-5 gap-4 text-white SFB">
+                <img className="invert" src="/src/assets/icons/mail.svg" />
+                &rarr;
+                <span>
+                  <a
+                    className="hover:underline  transition-all Section hover:text-blue-400"
+                    // change the href as well as the data instead for mail.to to work
+                    href="mailto:nirajsalunke07@gmail.com"
+                  >
+                    nirajsalunke07@gmail.com
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr className="bg-yellow-500 h-2" />
       <div
         id="Scroll"
         className="w-[100vw]  h-[100vh] overflow-x-auto overflow-y-hidden snap-start"
