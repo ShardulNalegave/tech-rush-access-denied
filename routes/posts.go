@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"time"
 
 	"github.com/ShardulNalegave/tech-rush-access-denied/models"
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
@@ -21,12 +22,52 @@ func mountPostsRoutes(r *chi.Mux) {
 	r.Get("/posts", getPosts)
 	r.Post("/posts", createPost)
 	r.Get("/posts/current", getLoggedInUserPosts)
+	r.Get("/posts/current/feed", getLoggedInUserFeed)
 	r.Get("/posts/{postID}", getPost)
 	r.Get("/posts/{postID}/likes", getPostLikes)
 	r.Post("/posts/{postID}/likes", likePost)
 	r.Get("/posts/{postID}/comments", postComments)
 	r.Post("/posts/{postID}/comments", addComment)
 	r.Delete("/posts/{postID}", deletePost)
+}
+
+func getLoggedInUserFeed(w http.ResponseWriter, r *http.Request) {
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	followingIDs := make([]uint64, 0)
+	query := `SELECT user_id FROM followers WHERE follower_id = $1`
+	if err := db.Select(&followingIDs, query, s.UserID); err != nil {
+		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
+		return
+	}
+
+	posts := make([]models.Post, 0)
+	query, args, err := sqlx.In(`SELECT * FROM posts WHERE posted_by IN (?) ORDER BY created_at DESC`, followingIDs)
+	if err != nil {
+		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
+		return
+	}
+
+	query = db.Rebind(query)
+	if err := db.Select(&posts, query, args...); err != nil {
+		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(posts)
+	if err != nil {
+		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 func getLoggedInUserPosts(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +80,7 @@ func getLoggedInUserPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	posts := make([]models.Post, 0)
-	query := `SELECT * FROM posts WHERE posted_by = $1`
+	query := `SELECT * FROM posts WHERE posted_by = $1 ORDER BY created_at DESC`
 	if err := db.Select(&posts, query, s.UserID); err != nil {
 		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
 		return
@@ -59,7 +100,7 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
 
 	posts := make([]models.Post, 0)
-	query := `SELECT * FROM posts`
+	query := `SELECT * FROM posts ORDER BY created_at DESC`
 	if err := db.Select(&posts, query); err != nil {
 		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
 		return
@@ -124,12 +165,13 @@ func createPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	createdAt := time.Now()
 	query := `
-		INSERT INTO posts(posted_by, caption)
-		VALUES ($1, $2)
+		INSERT INTO posts(posted_by, caption, created_at)
+		VALUES ($1, $2, $3)
 		RETURNING id
 	`
-	row := db.QueryRow(query, s.UserID, body.Caption)
+	row := db.QueryRow(query, s.UserID, body.Caption, createdAt)
 	if err := row.Err(); err != nil {
 		http.Error(w, "Couldn't create post", http.StatusInternalServerError)
 		return
@@ -168,10 +210,11 @@ func createPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data, _ := json.Marshal(models.Post{
-		ID:       pID,
-		Caption:  body.Caption,
-		PostedBy: s.UserID,
-		Likes:    0,
+		ID:        pID,
+		Caption:   body.Caption,
+		PostedBy:  s.UserID,
+		Likes:     0,
+		CreatedAt: createdAt,
 	})
 
 	w.WriteHeader(http.StatusOK)

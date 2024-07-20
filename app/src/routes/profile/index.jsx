@@ -66,75 +66,73 @@ export default function Profile() {
               onClick={() => handleImageClick(image)}
             >
               <img
+                loading="lazy"
                 src={image.url}
                 alt={image.title}
                 className="w-full h-full object-cover"
               />
-              {/* <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-								<p className="text-white text-lg">{image.title}</p>
-							</div> */}
-						</div>
-					))}
-				</div>
-			</div>
-			<Popup
-				open={open}
-				closeOnDocumentClick
-				onClose={closeModal}
-				overlayStyle={{ background: "rgba(0, 0, 0, 0.7)" }}
-			>
-				{selectedImage && (
-					<div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-						<div className="bg-white rounded-lg max-w-[90vw] md:max-w-[80vw] h-[80vh] relative top-3 shadow-lg flex flex-col md:flex-row items-center justify-center">
-							<button
-								className="absolute top-2 right-2 md:-right-10 px-2 text-2xl text-gray-200 hover:text-white"
-								onClick={closeModal}
-							>
-								&times;
-							</button>
-							<div className="w-full md:w-1/2 h-full p-2 md:p-4">
-								<img
-									src={selectedImage.url}
-									alt={selectedImage.title}
-									className="w-full h-full object-cover rounded-md"
-								/>
-							</div>
-							<div className="w-full md:w-1/2 flex flex-col p-4 text-gray-900 h-full">
-								<div className="flex-1 overflow-y-auto">
-									<h1 className="text-2xl md:text-3xl font-bold px-2 md:px-20">
-										{selectedImage.title}
-									</h1>
-									<p className="mb-4 md:mb-10 px-2 md:px-20">
-										Image description
-									</p>
-									{/* Profile card */}
-									<div className="flex items-center border-b-2 w-full space-x-4 p-4 cursor-pointer mb-4 md:mb-10">
-										<img
-											src="https://images.unsplash.com/photo-1577546568088-eb32790be7ec?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-											alt="Profile"
-											className="w-12 h-12 rounded-full"
-										/>
-										<div className="flex-1">
-											<h2 className="text-lg font-semibold">Username</h2>
-											<p className="text-sm text-gray-600">48 followers</p>
-										</div>
-										<button className="ml-auto bg-gray-100 text-black rounded-full px-4 py-2 hover:bg-gray-200">
-											Follow
-										</button>
-									</div>
-								</div>
-								<div className="mt-4 md:mt-10">
-									<input
-										type="text"
-										placeholder="Add a comment"
-										className="flex-grow outline-none px-3 py-2 w-full rounded-2xl text-gray-600 bg-gray-100"
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-				)}
-			</Popup>
-		</div>
-	);
+            </div>
+          ))}
+        </div>
+      </div>
+      <Popup
+        open={open}
+        closeOnDocumentClick
+        onClose={closeModal}
+        overlayStyle={{ background: "rgba(0, 0, 0, 0.7)" }}
+      >
+        {selectedImage && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-[90vw] md:max-w-[80vw] h-[80vh] relative top-3 shadow-lg flex flex-col md:flex-row items-center justify-center">
+              <button
+                className="absolute top-2 right-2 md:-right-10 px-2 text-2xl text-gray-200 hover:text-white"
+                onClick={closeModal}
+              >
+                &times;
+              </button>
+              <div className="w-full md:w-1/2 h-full p-2 md:p-4">
+                <img
+                  src={selectedImage.url}
+                  alt={selectedImage.title}
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col p-4 text-gray-900 h-full">
+                <div className="flex-1 overflow-y-auto">
+                  <h1 className="text-2xl md:text-3xl font-bold px-2 md:px-20">
+                    {selectedImage.title}
+                  </h1>
+                  <p className="mb-4 md:mb-10 px-2 md:px-20">
+                    Image description
+                  </p>
+                  {/* Profile card */}
+                  <div className="flex items-center border-b-2 w-full space-x-4 p-4 cursor-pointer mb-4 md:mb-10">
+                    <img
+                      src="https://images.unsplash.com/photo-1577546568088-eb32790be7ec?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Profile"
+                      className="w-12 h-12 rounded-full"
+                    />
+                    <div className="flex-1">
+                      <h2 className="text-lg font-semibold">Username</h2>
+                      <p className="text-sm text-gray-600">48 followers</p>
+                    </div>
+                    <button className="ml-auto bg-gray-100 text-black rounded-full px-4 py-2 hover:bg-gray-200">
+                      Follow
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 md:mt-10">
+                  <input
+                    type="text"
+                    placeholder="Add a comment"
+                    className="flex-grow outline-none px-3 py-2 w-full rounded-2xl text-gray-600 bg-gray-100"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </Popup>
+    </div>
+  );
 }
