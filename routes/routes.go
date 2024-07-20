@@ -6,5 +6,6 @@ func MountRoutes(r *chi.Mux) {
 	mountAuthRoutes(r)
 	mountUsersRoutes(r)
 	mountPostsRoutes(r)
+	mountCommentsRoutes(r)
 	mountStorageRoutes(r)
 }

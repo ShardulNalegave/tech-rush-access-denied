@@ -128,7 +128,7 @@ function Index() {
                   If Not, Just Join MOSAICIFY NOW!
                 </p>
                 <div className="w-full flex justify-center items-center">
-                  <button className="flex justify-center items-center hover:bg-yellow-400 hover:text-black bg-yellow-500 bg-opacity-70 rounded-3xl p-4 w-5/6 h-15 border SFB text-lg sm:text-xl md:text-2xl">
+                  <button className="flex justify-center items-center hover:bg-yellow-400 hover:text-black bg-yellow-500 bg-opacity-70 rounded-3xl p-4 w-5/6 h-15 border Section font-bold text-lg sm:text-xl md:text-2xl">
                     Join us!
                   </button>
                 </div>
