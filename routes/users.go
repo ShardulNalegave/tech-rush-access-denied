@@ -28,6 +28,7 @@ func mountUsersRoutes(r *chi.Mux) {
 	r.Get("/users/{userID}/following", getFollowing)
 	r.Get("/users/{userID}/likedPosts", likedPosts)
 	r.Post("/users/{userID}/follow", addFollow)
+	r.Get("/users/{userID}/posts", getPostsByUser)
 }
 
 func getLoggedInUser(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +41,7 @@ func getLoggedInUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	if err := db.Get(&user, "SELECT U.id, U.name, U.email, U.bio, U.about, U.profile_pic, U.follower_count, U.following_count FROM users U WHERE id = $1 LIMIT 1", s.UserID); err != nil {
+	if err := db.Get(&user, "SELECT U.id, U.name, U.email, U.bio, U.about, U.follower_count, U.following_count FROM users U WHERE id = $1 LIMIT 1", s.UserID); err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "No such user found", http.StatusNotFound)
 			return
@@ -182,7 +183,8 @@ func getAllUsers(w http.ResponseWriter, r *http.Request) {
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
 
 	users := make([]models.User, 0)
-	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.profile_pic, U.follower_count, U.following_count FROM users U"); err != nil {
+	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.follower_count, U.following_count FROM users U"); err != nil {
+		fmt.Println(err)
 		http.Error(w, "Could not fetch all users", http.StatusInternalServerError)
 		return
 	}
@@ -201,7 +203,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "userID")
 
 	var user models.User
-	if err := db.Get(&user, "SELECT U.id, U.name, U.email, U.bio, U.about, U.profile_pic, U.follower_count, U.following_count FROM users U WHERE id = $1 LIMIT 1", userID); err != nil {
+	if err := db.Get(&user, "SELECT U.id, U.name, U.email, U.bio, U.about, U.follower_count, U.following_count FROM users U WHERE id = $1 LIMIT 1", userID); err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "No such user found", http.StatusNotFound)
 			return
@@ -225,7 +227,7 @@ func getFollowers(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "userID")
 
 	users := make([]models.User, 0)
-	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.profile_pic, U.follower_count, U.following_count FROM followers F INNER JOIN users U ON U.id = F.follower_id WHERE F.user_id = $1", userID); err != nil {
+	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.follower_count, U.following_count FROM followers F INNER JOIN users U ON U.id = F.follower_id WHERE F.user_id = $1", userID); err != nil {
 		http.Error(w, "Could not fetch followers", http.StatusInternalServerError)
 		return
 	}
@@ -245,7 +247,7 @@ func getFollowing(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "userID")
 
 	users := make([]models.User, 0)
-	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.profile_pic, U.follower_count, U.following_count FROM followers F INNER JOIN users U ON U.id = F.user_id WHERE F.follower_id = $1", userID); err != nil {
+	if err := db.Select(&users, "SELECT U.id, U.name, U.email, U.bio, U.about, U.follower_count, U.following_count FROM followers F INNER JOIN users U ON U.id = F.user_id WHERE F.follower_id = $1", userID); err != nil {
 		http.Error(w, "Could not fetch following", http.StatusInternalServerError)
 		return
 	}
@@ -325,4 +327,25 @@ func addFollow(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write([]byte("Done"))
+}
+
+func getPostsByUser(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	posts := make([]models.Post, 0)
+	query := `SELECT * FROM posts WHERE posted_by = $1 ORDER BY created_at DESC`
+	if err := db.Select(&posts, query, userID); err != nil {
+		http.Error(w, "Couldn't fetch posts", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(posts)
+	if err != nil {
+		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }

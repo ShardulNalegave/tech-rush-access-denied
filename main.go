@@ -9,6 +9,7 @@ import (
 	"github.com/ShardulNalegave/tech-rush-access-denied/routes"
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -33,6 +34,14 @@ func main() {
 	sm := sessions.NewSessionManager()
 
 	r := chi.NewRouter()
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+	}))
+
 	r.Use(auth.SecureCookieMiddleware())
 	r.Use(database.DatabaseMiddleware(db))
 	r.Use(sessions.SessionManagerMiddleware(sm))

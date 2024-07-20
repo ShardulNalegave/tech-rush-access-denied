@@ -38,6 +38,9 @@ Gets all posts liked by `userID`
 - POST - `/users/{userID}/follow` \
 Allows current user to follow `userID`
 
+- GET - `/users/{userID}/posts` \
+Gets posts made by `userID`
+
 - GET - `/posts` \
 Get all posts
 
@@ -46,6 +49,9 @@ Allows the currently logged in user to create a new post
 
 - GET - `/posts/current` \
 Get posts by currently logged in user
+
+- GET - `/posts/current` \
+Get feed posts for currently logged in user
 
 - GET - `/posts/{postID}` \
 Get post with `id = postID`
