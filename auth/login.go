@@ -11,6 +11,7 @@ import (
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
 	"github.com/gorilla/securecookie"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -65,6 +66,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		MaxAge:   COOKIE_DURATION,
 	})
+
+	log.Info().
+		Str("Address", r.RemoteAddr).
+		Str("Email", body.Email).
+		Msg("User logged in")
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Done"))

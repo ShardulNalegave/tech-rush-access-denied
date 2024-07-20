@@ -1,55 +1,28 @@
-import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/auth/login")({
+import { useState } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
+import { getLoggedInUser, login, queryClient } from '../../utils/query';
+
+export const Route = createFileRoute('/auth/login')({
   component: Login,
 });
 
-import { useState } from "react";
-
 export default function Login() {
-  let [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+	const { isPending, data } = useSuspenseQuery(getLoggedInUser);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      console.log(formData);
-      let response = await fetch("http://localhost:8080/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      console.log("Response status:", response.status);
-      const responseData = await response.json();
-      console.log("Response data:", responseData);
-
-      if (response.ok) {
-        console.log("form data submitted");
-        navigate("/home");
-      }
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
-      } else {
-        console.log("error in form submission");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+		const res = await queryClient.fetchQuery(login(email, password));
+		if (res === true) {
+			window.location.replace('/feed');
+		}
   };
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+	if (isPending) return <></>
+	if (data != null) window.location.replace('/feed')
 
   return (
 		<div className="min-h-screen flex items-center bg-gray-100 justify-center p-8 overflow-y-hidden">
@@ -83,8 +56,11 @@ export default function Login() {
 										<input
 											type="text"
 											name="email"
-											value={formData.email}
-											onChange={handleOnChange}
+											value={email}
+											onChange={e => {
+												e.preventDefault();
+												setEmail(e.target.value);
+											}}
 											placeholder="Enter your email"
 											required
 											className="h-full rounded-md w-full outline-none border-b-2 pl-12 ring-inset ring-gray-300 focus:ring-1 focus:ring-inset text-lg font-medium border-gray-300 focus:border-yellow-500 transition duration-300"
@@ -95,8 +71,11 @@ export default function Login() {
 										<input
 											type="password"
 											name="password"
-											value={formData.password}
-											onChange={handleOnChange}
+											value={password}
+											onChange={e => {
+												e.preventDefault();
+												setPassword(e.target.value);
+											}}
 											placeholder="Enter your password"
 											required
 											className="h-full rounded-md w-full outline-none border-b-2 pl-12 text-lg ring-inset ring-gray-300 focus:ring-1 focus:ring-inset font-medium border-gray-300 focus:border-yellow-500 transition duration-300"

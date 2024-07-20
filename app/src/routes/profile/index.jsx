@@ -1,17 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
-import Popup from "reactjs-popup";
 
-export const Route = createFileRoute("/profile/")({
+import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import Popup from "reactjs-popup";
+import sampleImages from "../../sampleImages";
+
+export const Route = createFileRoute('/profile/')({
   component: Profile,
 });
 
-import sampleImages from "../../sampleImages";
-import { useState } from "react";
-
 export default function Profile() {
+
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [liked, setLiked] = useState(false);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -23,9 +23,6 @@ export default function Profile() {
     setSelectedImage(null);
   };
 
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
   return (
     <div className="flex flex-col items-center pt-10 border-t">
       <img
@@ -33,7 +30,7 @@ export default function Profile() {
         src="https://images.unsplash.com/photo-1577546568088-eb32790be7ec?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Profile"
       />
-      <h1 className="text-3xl font-semibold">Harsh Gaggar</h1>
+      <h1 className="text-3xl font-semibold">ABCD</h1>
       <p className="text-gray-500">@harshgaggar</p>
       <p className="text-gray-500">0 following</p>
       <p className="text-gray-800">
@@ -41,8 +38,8 @@ export default function Profile() {
       </p>
 
       <div className="mt-4 flex space-x-4">
-        <button class="relative mx-0 my-0 px-4 py-2 cursor-pointer border-none bg-gray-800 rounded-lg text-white font-light text-lg font-inherit overflow-hidden transition-all duration-300 ease-in-out hover:-rotate-3 ">
-          <span class="relative z-10">PORTFOLIO</span>
+        <button className="relative mx-0 my-0 px-4 py-2 cursor-pointer border-none bg-gray-800 rounded-lg text-white font-light text-lg font-inherit overflow-hidden transition-all duration-300 ease-in-out hover:-rotate-3 ">
+          <span className="relative z-10">PORTFOLIO</span>
         </button>
         <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200">
           Edit profile

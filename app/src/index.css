@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   color-scheme: light;
 }
@@ -52,21 +53,21 @@ html {
   background: #000;
 }
 @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-125%); }
-    100% { transform: translateY(0); }
-  }
-  
-  .oscillate-0 {
-    animation: float 7s ease-in-out infinite forwards;
-  }
-  
-  .oscillate-1 {
-    animation: float 7s ease-in-out infinite forwards;
-    animation-delay: 1.5s;
-  }
-  
-  .oscillate-2 {
-    animation: float 7s ease-in-out infinite forwards;
-    animation-delay: 3s;
-  }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-125%); }
+  100% { transform: translateY(0); }
+}
+
+.oscillate-0 {
+  animation: float 7s ease-in-out infinite forwards;
+}
+
+.oscillate-1 {
+  animation: float 7s ease-in-out infinite forwards;
+  animation-delay: 1.5s;
+}
+
+.oscillate-2 {
+  animation: float 7s ease-in-out infinite forwards;
+  animation-delay: 3s;
+}
