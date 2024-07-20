@@ -15,6 +15,7 @@ import { Route as TestfeedImport } from './routes/test_feed'
 import { Route as TestImport } from './routes/test'
 import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as FeedImport } from './routes/feed'
+import { Route as ErrorpageImport } from './routes/errorpage'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as ProfileEditImport } from './routes/profile/edit'
@@ -40,6 +41,11 @@ const PortfolioRoute = PortfolioImport.update({
 
 const FeedRoute = FeedImport.update({
   path: '/feed',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ErrorpageRoute = ErrorpageImport.update({
+  path: '/errorpage',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -79,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/errorpage': {
+      id: '/errorpage'
+      path: '/errorpage'
+      fullPath: '/errorpage'
+      preLoaderRoute: typeof ErrorpageImport
+      parentRoute: typeof rootRoute
+    }
     '/feed': {
       id: '/feed'
       path: '/feed'
@@ -86,39 +99,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeedImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioImport
       parentRoute: typeof rootRoute
     }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/signup': {
-      id: '/auth/signup'
-      path: '/auth/signup'
-      fullPath: '/auth/signup'
-      preLoaderRoute: typeof AuthSignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile/edit': {
-      id: '/profile/edit'
-      path: '/profile/edit'
-      fullPath: '/profile/edit'
-      preLoaderRoute: typeof ProfileEditImport
-      parentRoute: typeof rootRoute
-    }
-    '/profile/': {
-      id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileIndexImport
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestImport
       parentRoute: typeof rootRoute
     }
     '/test_feed': {
@@ -163,6 +155,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  ErrorpageRoute,
   FeedRoute,
   PortfolioRoute,
   TestRoute,
@@ -182,6 +175,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/errorpage",
         "/feed",
         "/portfolio",
         "/test",
@@ -194,6 +188,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/": {
       "filePath": "index.jsx"
+    },
+    "/errorpage": {
+      "filePath": "errorpage.jsx"
     },
     "/feed": {
       "filePath": "feed.jsx"
