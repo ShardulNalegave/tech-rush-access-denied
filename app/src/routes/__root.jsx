@@ -35,7 +35,7 @@ function RootLayout() {
           },
           {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.25,
           }
         )
       : gsap.fromTo(
@@ -45,7 +45,7 @@ function RootLayout() {
           },
           {
             opacity: 0,
-            duration: 0.5,
+            duration: 0.25,
           }
         );
   };
@@ -97,7 +97,7 @@ function RootLayout() {
               </li>
               <li>
                 <Link
-                  to="/login"
+                  to="/auth/login"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Login
@@ -105,7 +105,7 @@ function RootLayout() {
               </li>
               <li>
                 <Link
-                  to="/signup"
+                  to="/auth/signup"
                   className="[&.active]:border-b-2 border-yellow-500"
                 >
                   Signup

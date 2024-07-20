@@ -41,8 +41,8 @@ export default function Profile() {
       </p>
 
       <div className="mt-4 flex space-x-4">
-        <button class="relative mx-0 my-0 px-4 py-2 cursor-pointer border-none bg-gray-800 rounded-lg text-white font-light text-lg font-inherit overflow-hidden transition-all duration-300 ease-in-out hover:-rotate-3 ">
-          <span class="relative z-10">PORTFOLIO</span>
+        <button className="relative mx-0 my-0 px-4 py-2 cursor-pointer border-none bg-gray-800 rounded-lg text-white font-light text-lg font-inherit overflow-hidden transition-all duration-300 ease-in-out hover:-rotate-3 ">
+          <span className="relative z-10">PORTFOLIO</span>
         </button>
         <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200">
           Edit profile
