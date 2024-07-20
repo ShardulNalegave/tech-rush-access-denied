@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Popup from "reactjs-popup";
 
-export const Route = createFileRoute("/profile")({
+export const Route = createFileRoute("/profile/")({
   component: Profile,
 });
 
-import sampleImages from "../sampleImages";
+import sampleImages from "../../sampleImages";
 import { useState } from "react";
 
 export default function Profile() {
