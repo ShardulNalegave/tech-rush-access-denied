@@ -87,7 +87,7 @@ export default function Login() {
 											onChange={handleOnChange}
 											placeholder="Enter your email"
 											required
-											className="h-full SFB rounded-md w-full outline-none border-b-2 pl-12 ring-inset ring-gray-300 focus:ring-1 focus:ring-inset text-lg font-medium border-gray-300 focus:border-yellow-500 transition duration-300"
+											className="h-full rounded-md w-full outline-none border-b-2 pl-12 ring-inset ring-gray-300 focus:ring-1 focus:ring-inset text-lg font-medium border-gray-300 focus:border-yellow-500 transition duration-300"
 										/>
 									</div>
 									<div className="flex items-center h-12 w-full relative">
@@ -99,7 +99,7 @@ export default function Login() {
 											onChange={handleOnChange}
 											placeholder="Enter your password"
 											required
-											className="h-full SFB rounded-md w-full outline-none border-b-2 pl-12 text-lg ring-inset ring-gray-300 focus:ring-1 focus:ring-inset font-medium border-gray-300 focus:border-yellow-500 transition duration-300"
+											className="h-full rounded-md w-full outline-none border-b-2 pl-12 text-lg ring-inset ring-gray-300 focus:ring-1 focus:ring-inset font-medium border-gray-300 focus:border-yellow-500 transition duration-300"
 										/>
 									</div>
 									<div className="text-sm font-medium SFB text-gray-800">

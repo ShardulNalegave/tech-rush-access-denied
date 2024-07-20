@@ -22,8 +22,8 @@ function Index() {
   }, []);
 
   return (
-    <>
-      <div id="Home" className="w-full h-screen overflow-hidden relative">
+    <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
+      <div id="Home" className="w-full h-screen overflow-hidden relative snap-start">
         <video
           autoPlay
           muted
@@ -48,7 +48,7 @@ function Index() {
       </div>
       <div className="w-full h-2 bg-yellow-500"></div>
       {/* Second Part */}
-      <div className="w-[100vw]  h-screen relative">
+      <div className="w-[100vw]  h-screen relative snap-start">
         <video
           autoPlay
           muted
@@ -97,7 +97,7 @@ function Index() {
       </div>
       <div className="w-full h-2 bg-yellow-500"></div>
       {/* Third Part */}
-      <div className="w-[100vw] md:w-[100vw] h-screen relative">
+      <div className="w-[100vw] md:w-[100vw] h-screen relative snap-start">
         <video
           autoPlay
           muted
@@ -147,6 +147,6 @@ function Index() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
