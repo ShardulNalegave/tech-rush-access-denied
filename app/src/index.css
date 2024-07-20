@@ -52,22 +52,10 @@ html {
 #Scroll {
   background: #000;
 }
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-125%); }
-  100% { transform: translateY(0); }
+.button .box .before-content {
+  transition: transform 0.4s;
 }
 
-.oscillate-0 {
-  animation: float 7s ease-in-out infinite forwards;
-}
-
-.oscillate-1 {
-  animation: float 7s ease-in-out infinite forwards;
-  animation-delay: 1.5s;
-}
-
-.oscillate-2 {
-  animation: float 7s ease-in-out infinite forwards;
-  animation-delay: 3s;
+.button:hover .box .before-content {
+  transform: translateY(0);
 }
