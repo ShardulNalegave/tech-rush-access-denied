@@ -13,14 +13,13 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as TestfeedImport } from './routes/test_feed'
 import { Route as TestImport } from './routes/test'
-import { Route as SignupImport } from './routes/signup'
-import { Route as ProfileImport } from './routes/profile'
-import { Route as PortofolioImport } from './routes/portofolio'
-import { Route as LoginImport } from './routes/login'
+import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as FeedImport } from './routes/feed'
-import { Route as EditprofileImport } from './routes/edit_profile'
-import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProfileIndexImport } from './routes/profile/index'
+import { Route as ProfileEditImport } from './routes/profile/edit'
+import { Route as AuthSignupImport } from './routes/auth/signup'
+import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
 
@@ -34,23 +33,8 @@ const TestRoute = TestImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SignupRoute = SignupImport.update({
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ProfileRoute = ProfileImport.update({
-  path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PortofolioRoute = PortofolioImport.update({
-  path: '/portofolio',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LoginRoute = LoginImport.update({
-  path: '/login',
+const PortfolioRoute = PortfolioImport.update({
+  path: '/portfolio',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -59,18 +43,28 @@ const FeedRoute = FeedImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const EditprofileRoute = EditprofileImport.update({
-  path: '/edit_profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AboutRoute = AboutImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileIndexRoute = ProfileIndexImport.update({
+  path: '/profile/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileEditRoute = ProfileEditImport.update({
+  path: '/profile/edit',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignupRoute = AuthSignupImport.update({
+  path: '/auth/signup',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -83,20 +77,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
-    '/edit_profile': {
-      id: '/edit_profile'
-      path: '/edit_profile'
-      fullPath: '/edit_profile'
-      preLoaderRoute: typeof EditprofileImport
       parentRoute: typeof rootRoute
     }
     '/feed': {
@@ -113,32 +93,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/portofolio': {
-      id: '/portofolio'
-      path: '/portofolio'
-      fullPath: '/portofolio'
-      preLoaderRoute: typeof PortofolioImport
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof rootRoute
     }
-    '/profile': {
-      id: '/profile'
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/edit': {
+      id: '/profile/edit'
+      path: '/profile/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof ProfileEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestImport
+      preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof rootRoute
     }
     '/test_feed': {
@@ -148,6 +128,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestfeedImport
       parentRoute: typeof rootRoute
     }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/edit': {
+      id: '/profile/edit'
+      path: '/profile/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof ProfileEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -155,15 +163,14 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  AboutRoute,
-  EditprofileRoute,
   FeedRoute,
-  LoginRoute,
-  PortofolioRoute,
-  ProfileRoute,
-  SignupRoute,
+  PortfolioRoute,
   TestRoute,
   TestfeedRoute,
+  AuthLoginRoute,
+  AuthSignupRoute,
+  ProfileEditRoute,
+  ProfileIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -175,46 +182,42 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/about",
-        "/edit_profile",
         "/feed",
-        "/login",
-        "/portofolio",
-        "/profile",
-        "/signup",
+        "/portfolio",
         "/test",
-        "/test_feed"
+        "/test_feed",
+        "/auth/login",
+        "/auth/signup",
+        "/profile/edit",
+        "/profile/"
       ]
     },
     "/": {
       "filePath": "index.jsx"
     },
-    "/about": {
-      "filePath": "about.jsx"
-    },
-    "/edit_profile": {
-      "filePath": "edit_profile.jsx"
-    },
     "/feed": {
       "filePath": "feed.jsx"
     },
-    "/login": {
-      "filePath": "login.jsx"
-    },
-    "/portofolio": {
-      "filePath": "portofolio.jsx"
-    },
-    "/profile": {
-      "filePath": "profile.jsx"
-    },
-    "/signup": {
-      "filePath": "signup.jsx"
+    "/portfolio": {
+      "filePath": "portfolio.jsx"
     },
     "/test": {
       "filePath": "test.jsx"
     },
     "/test_feed": {
       "filePath": "test_feed.jsx"
+    },
+    "/auth/login": {
+      "filePath": "auth/login.jsx"
+    },
+    "/auth/signup": {
+      "filePath": "auth/signup.jsx"
+    },
+    "/profile/edit": {
+      "filePath": "profile/edit.jsx"
+    },
+    "/profile/": {
+      "filePath": "profile/index.jsx"
     }
   }
 }

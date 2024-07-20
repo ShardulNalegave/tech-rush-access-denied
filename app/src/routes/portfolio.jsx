@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import PortScroll from "../components/PortScroll";
 import { TypeAnimation } from "react-type-animation";
 
-export const Route = createFileRoute("/portofolio")({
+export const Route = createFileRoute("/portfolio")({
   component: Portofolio,
 });
 
