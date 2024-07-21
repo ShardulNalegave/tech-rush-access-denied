@@ -16,9 +16,11 @@ import { Route as TestImport } from './routes/test'
 import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as FeedImport } from './routes/feed'
 import { Route as ErrorpageImport } from './routes/errorpage'
+import { Route as PostImport } from './routes/Post'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as ProfileEditImport } from './routes/profile/edit'
+import { Route as ProfileUserIDImport } from './routes/profile/$userID'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthLoginImport } from './routes/auth/login'
 
@@ -49,6 +51,11 @@ const ErrorpageRoute = ErrorpageImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PostRoute = PostImport.update({
+  path: '/Post',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
@@ -61,6 +68,11 @@ const ProfileIndexRoute = ProfileIndexImport.update({
 
 const ProfileEditRoute = ProfileEditImport.update({
   path: '/profile/edit',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileUserIDRoute = ProfileUserIDImport.update({
+  path: '/profile/$userID',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -83,6 +95,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/Post': {
+      id: '/Post'
+      path: '/Post'
+      fullPath: '/Post'
+      preLoaderRoute: typeof PostImport
       parentRoute: typeof rootRoute
     }
     '/errorpage': {
@@ -134,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/profile/$userID': {
+      id: '/profile/$userID'
+      path: '/profile/$userID'
+      fullPath: '/profile/$userID'
+      preLoaderRoute: typeof ProfileUserIDImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/edit': {
       id: '/profile/edit'
       path: '/profile/edit'
@@ -155,6 +181,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  PostRoute,
   ErrorpageRoute,
   FeedRoute,
   PortfolioRoute,
@@ -162,6 +189,7 @@ export const routeTree = rootRoute.addChildren({
   TestfeedRoute,
   AuthLoginRoute,
   AuthSignupRoute,
+  ProfileUserIDRoute,
   ProfileEditRoute,
   ProfileIndexRoute,
 })
@@ -172,9 +200,10 @@ export const routeTree = rootRoute.addChildren({
 {
   "routes": {
     "__root__": {
-      "filePath": "__root.jsx",
+      "filePath": "__root.tsx",
       "children": [
         "/",
+        "/Post",
         "/errorpage",
         "/feed",
         "/portfolio",
@@ -182,12 +211,16 @@ export const routeTree = rootRoute.addChildren({
         "/test_feed",
         "/auth/login",
         "/auth/signup",
+        "/profile/$userID",
         "/profile/edit",
         "/profile/"
       ]
     },
     "/": {
       "filePath": "index.jsx"
+    },
+    "/Post": {
+      "filePath": "Post.jsx"
     },
     "/errorpage": {
       "filePath": "errorpage.jsx"
@@ -209,6 +242,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/auth/signup": {
       "filePath": "auth/signup.jsx"
+    },
+    "/profile/$userID": {
+      "filePath": "profile/$userID.jsx"
     },
     "/profile/edit": {
       "filePath": "profile/edit.jsx"

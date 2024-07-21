@@ -38,6 +38,12 @@ Gets all posts liked by `userID`
 - POST - `/users/{userID}/follow` \
 Allows current user to follow `userID`
 
+- POST - `/users/{userID}/unfollow` \
+Allows current user to unfollow `userID`
+
+- GET - `/users/{userID}/doesFollow` \
+Tells whether user follows `userID`
+
 - GET - `/users/{userID}/posts` \
 Gets posts made by `userID`
 
@@ -50,7 +56,7 @@ Allows the currently logged in user to create a new post
 - GET - `/posts/current` \
 Get posts by currently logged in user
 
-- GET - `/posts/current` \
+- GET - `/posts/current/feed` \
 Get feed posts for currently logged in user
 
 - GET - `/posts/{postID}` \
@@ -61,6 +67,12 @@ Get info about which users have liked `postID`
 
 - POST - `/posts/{postID}/likes` \
 Allows current user to like `postID`
+
+- DELETE - `/posts/{postID}/likes` \
+Allows current user to unlike `postID`
+
+- GET - `/posts/{postID}/doesLike` \
+Tells whether user likes `postID`
 
 - GET - `/posts/{postID}/comments` \
 Gets all comments on `postID`

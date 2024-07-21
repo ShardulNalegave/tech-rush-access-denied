@@ -1,7 +1,0 @@
-services:
-  backend:
-    build: .
-  redis:
-    image: "redis"
-  postgres:
-    image: "postgres"

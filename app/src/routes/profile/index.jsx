@@ -1,17 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
-import Popup from "reactjs-popup";
 
-export const Route = createFileRoute("/profile/")({
+import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import Popup from "reactjs-popup";
+import sampleImages from "../../sampleImages";
+
+export const Route = createFileRoute('/profile/')({
   component: Profile,
 });
 
-import sampleImages from "../../sampleImages";
-import { useState } from "react";
-
 export default function Profile() {
+
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [liked, setLiked] = useState(false);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -23,17 +23,14 @@ export default function Profile() {
     setSelectedImage(null);
   };
 
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
   return (
-    <div className="flex flex-col items-center pt-10 border-t">
+    <div className="flex flex-col Section items-center pt-10 border-t">
       <img
         className="rounded-full w-40 h-40 mb-4"
         src="https://images.unsplash.com/photo-1577546568088-eb32790be7ec?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Profile"
       />
-      <h1 className="text-3xl font-semibold">Harsh Gaggar</h1>
+      <h1 className="text-3xl font-semibold">ABCD</h1>
       <p className="text-gray-500">@harshgaggar</p>
       <p className="text-gray-500">0 following</p>
       <p className="text-gray-800">
@@ -57,7 +54,7 @@ export default function Profile() {
           Saved
         </button>
       </div>
-      <div className="mt-5 mx-20">
+      <div className="mt-5 mx-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {sampleImages.map((image) => (
             <div

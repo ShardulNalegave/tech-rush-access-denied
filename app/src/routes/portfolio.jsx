@@ -4,10 +4,10 @@ import PortScroll from "../components/PortScroll";
 import { TypeAnimation } from "react-type-animation";
 
 export const Route = createFileRoute("/portfolio")({
-  component: Portofolio,
+  component: Portfolio,
 });
 
-function Portofolio() {
+function Portfolio() {
   const [horizontalScrollCompleted, setHorizontalScrollCompleted] =
     useState(false);
   const scrollContainerRef = useRef(null);
@@ -129,9 +129,9 @@ function Portofolio() {
           <source src="/bg112.mp4" type="video/mp4" />
         </video>
         <div className=" p-4 w-full h-full flex justify-center items-center">
-          <div className="w-[95%] rounded-3xl lg:rounded-full lg:p-28  h-[85%] backdrop-blur-xl border border-gray-300 shadow-2xl p-5 drop-shadow-2xl  ">
+          <div className="w-[95%] rounded-3xl lg:rounded-[5000px] lg:p-28  h-[85%] backdrop-blur-xl border border-gray-300 shadow-2xl p-5 drop-shadow-2xl  ">
             <div className="Title flex justify-center text-9xl lg:text-[180px] text-white">
-              <h1 className="">About m & </h1>
+              <h1 className="">About me </h1>
             </div>
             <div>
               <p className="text-sm Section lg:text-xl text-white">
