@@ -37,7 +37,7 @@ function Index() {
         </video>
         <div className="w-full flex justify-center h-1/3 items-center relative">
           <div className="flex flex-col items-center md:h-full md:justify-evenly gap-2">
-            <span className="text-8xl sm:text-8xl  2xl:text-[250px] md:text-[10rem] rounded-2xl md:px-7 backdrop-blur-md shadow-inner p-2 drop-shadow-3xl md:mt-10 Title font-bold">
+            <span className="text-8xl sm:text-8xl  2xl:text-[200px] md:text-[10rem] rounded-2xl md:px-7 backdrop-blur-md shadow-inner p-2 drop-shadow-3xl md:mt-10 Title font-bold">
               Mosaicify
             </span>
             <p className="Section border-black p-2 text-base sm:text-lg md:text-xl">
