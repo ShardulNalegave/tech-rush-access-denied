@@ -1,46 +1,61 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef,useEffect } from "react";
-import sampleImages from "../sampleImages";
 
 export const Route = createFileRoute("/test")({
-	component: test,
+	component: Test,
 });
 
-import React from 'react'
+import React from "react";
+import { TypeAnimation } from "react-type-animation";
 
-export default function test() {
-  return (
-		<div className="bg-cyan-100 h-screen max-w-[100vw] items-center justify-center flex ">
-			<div className=" lg:flex-1">
-				<img
-					src="/imgs/1.jpg"
-					className="h-[70vh] w-[19vw] z-[10] rounded-2xl object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 absolute top-[9rem] left-[240px] hidden lg:block"
-					alt=""
-				/>
-				<img
-					src="/imgs/8.jpg"
-					className="h-[40vh] w-[15vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-2xl absolute top-[23rem] left-20 hidden lg:block"
-					alt=""
-				/>
-				<img
-					src="/imgs/5.jpg"
-					className="h-[50vh] w-[17vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-2xl absolute top-[12rem] left-[400px] hidden lg:block"
-					alt=""
-				/>
-				<img
-					src="/imgs/9.jpg"
-					className="h-[30vh] w-[14vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-full absolute top-16 left-24 hidden lg:block"
-					alt=""
-				/>
+export default function Test() {
+	return (
+		<div className="bg-black w-full h-screen grid grid-cols-1 lg:grid-cols-2 overflow-y-hidden">
+			<div className="my-5 px-5 lg:px-16 lg:py-20 flex flex-col justify-start md:justify-center lg:justify-start">
+				<h1 className="font-semibold text-white text-3xl lg:text-5xl text-left">
+					Hey there,
+				</h1>
+
+				<div className="mt-2 font-bold text-yellow-500 text-4xl lg:text-5xl text-left">
+					<TypeAnimation
+						sequence={[
+							"I'm Jose Mourinho",
+							1500,
+							"I'm",
+							1500,
+							"I'm Jose Mourinho",
+							1500,
+							"I'm",
+							1500,
+							"I'm Jose Mourinho",
+							1500,
+						]}
+					/>
+				</div>
+				<h1 className="mt-8 font-secondary font-normal text-gray-400 text-xl text-left">
+					John Smith is a passionate photographer with over a decade of
+					experience capturing stunning landscapes and intimate portraits. His
+					work has been featured in various international magazines and
+					exhibitions. John's unique ability to blend natural light with
+					creative compositions sets his photography apart, making each image a
+					work of art.
+				</h1>
+				<div className="flex flex-col lg:flex-row lg:justify-around mt-8">
+					<button className="w-full lg:w-auto mt-4 lg:mt-0 bg-transparent transition duration-500 ease-in-out hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-black py-4 px-6 border border-yellow-500 hover:border-transparent rounded">
+						<a href="mailto:harshgaggar19@gmail.com">Mail me!!</a>
+					</button>
+				</div>
 			</div>
-			<div className="flex-1 flex flex-col justify-center items-center px-10">
-				<h3 className="text-6xl Title font-bold text-yellow-500">
-				  Looking for something? <br /> This is the right place
-				</h3>
-				<p className=" py-4 SFB">
-					What do you want to try next? Think of something you’re into—and see what you find.
-			  </p>
-			  <button className="bg-yellow-500 px-4 py-2 rounded-3xl text-white font-semibold hover:bg-yellow-600 hover:scale-105 transition duration-300">Explore</button>
+
+			
+			<div className="px-5 flex flex-col items-center mt-10 lg:mt-0">
+				<div className="relative w-48 h-48 lg:w-80 lg:h-80 top-24 flex justify-center items-center">
+					<div className="absolute inset-0 rounded-full border-2 border-yellow-500 animate-glow hidden lg:flex"></div>
+					<img
+						src="/imgs/8.jpg"
+						className="w-full h-full rounded-full object-cover shadow-md hidden lg:flex"
+						alt="John Smith"
+					/>
+				</div>
 			</div>
 		</div>
 	);

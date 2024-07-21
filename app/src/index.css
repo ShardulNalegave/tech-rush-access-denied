@@ -59,3 +59,23 @@ html {
 .button:hover .box .before-content {
   transform: translateY(0);
 }
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 4px yellow;
+  }
+  33% {
+    box-shadow: 0 0 9px yellow;
+  }
+  66% {
+    box-shadow: 0 0 7px yellow;
+  }
+  100% {
+    box-shadow: 0 0 4px yellow;
+  }
+}
+
+@layer utilities {
+  .animate-glow {
+    animation: glow 2s infinite;
+  }
+}
