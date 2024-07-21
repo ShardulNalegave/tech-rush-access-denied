@@ -30,8 +30,8 @@ export default function Navbar() {
   );
 
   return (
-    <div className='z-50 fixed top-0 left-0 right-0 w-[100vw] bg-white py-[10px] px-[30px] border-b-[2px] border-solid border-b-zinc-950 border-opacity-50 flex items-center'>
-      <Link to="/" className="flex-none">
+    <div className='z-50 top-0 left-0 right-0 w-[100vw] bg-white py-[10px] px-[30px] border-b-[2px] border-solid border-b-zinc-950 border-opacity-50 flex items-center'>
+      <Link to={data === null ? '/' : '/feed'} className="flex-none">
         <img
           className="h-[60px] scale-125"
           src="/src/assets/logos/png/logo-black.png"

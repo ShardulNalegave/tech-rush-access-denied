@@ -28,6 +28,8 @@ func mountUsersRoutes(r *chi.Mux) {
 	r.Get("/users/{userID}/following", getFollowing)
 	r.Get("/users/{userID}/likedPosts", likedPosts)
 	r.Post("/users/{userID}/follow", addFollow)
+	r.Post("/users/{userID}/unfollow", removeFollow)
+	r.Get("/users/{userID}/doesFollow", doesUserFollow)
 	r.Get("/users/{userID}/posts", getPostsByUser)
 }
 
@@ -327,6 +329,87 @@ func addFollow(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write([]byte("Done"))
+}
+
+func removeFollow(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	uID, err := strconv.Atoi(userID)
+	if err != nil {
+		http.Error(w, "Invalid 'userID' provided", http.StatusBadRequest)
+		return
+	}
+
+	if s.UserID == uint64(uID) {
+		http.Error(w, "Cannot unfollow yourself", http.StatusUnauthorized)
+		return
+	}
+
+	tx, err := db.Beginx()
+	if err != nil {
+		http.Error(w, "Couldn't unfollow", http.StatusInternalServerError)
+		return
+	}
+
+	tx.Exec(`
+		UPDATE users
+		SET following_count = following_count - 1
+		WHERE id = $1
+	`, s.UserID)
+	tx.Exec(`
+		UPDATE users
+		SET follower_count = follower_count - 1
+		WHERE id = $1
+	`, userID)
+	tx.Exec(`DELETE FROM followers WHERE user_id = $1 AND follower_id = $2`, userID, s.UserID)
+
+	err = tx.Commit()
+	if err != nil {
+		http.Error(w, "Couldn't unfollow", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Done"))
+}
+
+func doesUserFollow(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	result := false
+	row := db.QueryRow(`SELECT EXISTS(SELECT * FROM followers WHERE user_id = $1 AND follower_id = $2)`, userID, s.UserID)
+	if err := row.Err(); err != nil {
+		http.Error(w, "Couldn't fetch", http.StatusInternalServerError)
+		return
+	}
+	if err := row.Scan(&result); err != nil {
+		http.Error(w, "Couldn't fetch", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(struct {
+		Result bool `json:"result"`
+	}{Result: result})
+	if err != nil {
+		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 func getPostsByUser(w http.ResponseWriter, r *http.Request) {

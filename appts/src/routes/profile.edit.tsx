@@ -53,7 +53,7 @@ function EditProfilePage() {
 
   if (!user) return <></>;
   return (
-    <div className="container mx-auto my-6 p-[20px] md:p-[0px]">
+    <div className="container mx-auto my-10 p-[20px] md:p-[0px]">
 			<div className="flex justify-center">
 				<div className="w-full max-w-2xl">
 					<h1 className="text-3xl space-y-6 font-semibold mb-6">Edit Your Profile</h1>

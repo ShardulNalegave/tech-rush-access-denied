@@ -12,13 +12,13 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <>
+    <div className='h-screen w-screen overflow-x-hidden overflow-y-hidden flex flex-col'>
       <Navbar />
-      <div className='bg-zinc-50 h-[100vh] w-[100vw] overflow-x-hidden overflow-y-auto pt-[120px]'>
+      <div className='bg-zinc-50 grow overflow-y-auto'>
         <Outlet />
       </div>
       <ReactQueryDevtools />
       <TanStackRouterDevtools />
-    </>
+    </div>
   );
 }

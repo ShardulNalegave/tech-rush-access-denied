@@ -86,3 +86,40 @@ export const updateUserProfilePic = (payload : {
     return res.status === 200;
   },
 });
+
+export const followUser = (id: string) => queryOptions({
+  queryKey: ['followUser', id],
+  queryFn: async () => {
+    const res = await fetch(`${backendURL}/users/${id}/follow`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+
+    return res.status === 200;
+  },
+});
+
+export const unfollowUser = (id: string) => queryOptions({
+  queryKey: ['unfollowUser', id],
+  queryFn: async () => {
+    const res = await fetch(`${backendURL}/users/${id}/unfollow`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+
+    return res.status === 200;
+  },
+});
+
+export const doesFollowUser = (id: string) => queryOptions({
+  queryKey: ['doesFollowUser', id],
+  queryFn: async () => {
+    const res = await fetch(`${backendURL}/users/${id}/doesFollow`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+
+    if (res.status != 200) return false;
+    return (await res.json()).result;
+  },
+});

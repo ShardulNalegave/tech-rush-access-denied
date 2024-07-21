@@ -23,3 +23,21 @@
     src: url(/fonts/SFPRODISPLAYREGULAR.OTF) format("opentype");
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  background-color: white;
+  width: 10px;
+  border-left: 2px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

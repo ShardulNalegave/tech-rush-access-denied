@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import PhotoMan from "../components/PhotoMan";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
