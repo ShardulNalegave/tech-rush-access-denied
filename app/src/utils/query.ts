@@ -27,18 +27,19 @@ export const login = (email: string, password: string) => {
 export const getLoggedInUser = queryOptions({
   queryKey: ['getLoggedInUser'],
   queryFn: async (): Promise<IUser | null> => {
-    try {
-      const res = await fetch(`http://localhost:5000/users/current`, { credentials: 'include' });
-      if (res.status != 200) {
-        return null;
-      }
+    return null;
+    // try {
+    //   const res = await fetch(`http://localhost:5000/users/current`, { credentials: 'include' });
+    //   if (res.status != 200) {
+    //     return null;
+    //   }
   
-      const user = await res.json();
-      console.log(user);
-      return user;
-    } catch (e) {
-      return null;
-    }
+    //   const user = await res.json();
+    //   console.log(user);
+    //   return user;
+    // } catch (e) {
+    //   return null;
+    // }
   },
 });
 

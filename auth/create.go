@@ -9,6 +9,7 @@ import (
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -65,6 +66,11 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
 		return
 	}
+
+	log.Info().
+		Str("Address", r.RemoteAddr).
+		Str("Email", body.Email).
+		Msg("New user created")
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)

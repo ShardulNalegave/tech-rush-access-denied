@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { createFileRoute, getRouteApi, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, getRouteApi, useRouter } from '@tanstack/react-router';
 import { backendURL, queryClient } from '../query/query';
-import { getLoggedInUser, getUser, getUserLikedPosts, getUserPosts } from '../query/users';
+import { doesFollowUser, followUser, getLoggedInUser, getUser, getUserLikedPosts, getUserPosts, unfollowUser } from '../query/users';
 import { useQuery } from '@tanstack/react-query';
 import ImageGrid from '../components/imageGrid';
 
@@ -17,18 +17,36 @@ export const Route = createFileRoute('/profile/$userID')({
 });
 
 function UserProfilePage() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [tab, setTab] = useState(Tabs.Posts);
 
   const user = routeAPI.useLoaderData();
   const { userID } = routeAPI.useParams();
-  const { isPending, data } = useQuery(getUser(userID));
+  const { isPending, data, refetch: refetchUser } = useQuery(getUser(userID));
+  const { isPending: isPendingDoesFollow, data: doesFollow, refetch: refetchDoesFollow } = useQuery(doesFollowUser(userID));
+
+  const refetchData = async () => {
+    await refetchUser();
+    await refetchDoesFollow();
+  };
+
+  const handleFollow = async () => {
+    await queryClient.fetchQuery(followUser(userID));
+    await refetchData();
+    router.invalidate();
+  };
+
+  const handleUnfollow = async () => {
+    await queryClient.fetchQuery(unfollowUser(userID));
+    await refetchData();
+    router.invalidate();
+  };
 
   if (isPending) return <></>;
   if (!data) return <></>;
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center pt-[50px]'>
       <img
         className="rounded-full w-40 h-40 mb-4"
         src={`${backendURL}/storage/profile_pics/${data.id}`}
@@ -45,21 +63,26 @@ function UserProfilePage() {
 
       <div className="mt-4 flex space-x-4">
         <button className="mx-0 my-0 px-4 py-2 cursor-pointer border-none bg-gray-800 rounded-lg text-white font-light text-lg font-inherit overflow-hidden "
-          onClick={() => navigate({ to: `/portfolio/${data.id}` })}
+          onClick={() => router.navigate({ to: `/portfolio/${data.id}` })}
         >
           Portfolio
         </button>
         {
           user?.id === data?.id ?
             <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200" onClick={
-              () => navigate({ to: '/profile/edit' })
+              () => router.navigate({ to: '/profile/edit' })
             }>
               Edit profile
             </button>
-            :
-            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200">
+            : !isPendingDoesFollow && doesFollow ?
+            <button onClick={handleUnfollow} className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200">
+              Unfollow
+            </button>
+            : !isPendingDoesFollow && !doesFollow ?
+            <button onClick={handleFollow} className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-yellow-400 hover:text-black transition duration-200">
               Follow
             </button>
+            : <></>
         }
       </div>
 

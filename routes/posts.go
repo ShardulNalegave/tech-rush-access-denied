@@ -26,6 +26,8 @@ func mountPostsRoutes(r *chi.Mux) {
 	r.Get("/posts/{postID}", getPost)
 	r.Get("/posts/{postID}/likes", getPostLikes)
 	r.Post("/posts/{postID}/likes", likePost)
+	r.Delete("/posts/{postID}/likes", deleteLike)
+	r.Get("/posts/{postID}/doesLike", doesUserLikePost)
 	r.Get("/posts/{postID}/comments", postComments)
 	r.Post("/posts/{postID}/comments", addComment)
 	r.Delete("/posts/{postID}", deletePost)
@@ -342,6 +344,71 @@ func likePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write([]byte("Done"))
+}
+
+func deleteLike(w http.ResponseWriter, r *http.Request) {
+	postID := chi.URLParam(r, "postID")
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	tx, err := db.Beginx()
+	if err != nil {
+		http.Error(w, "Couldn't remove like", http.StatusInternalServerError)
+		return
+	}
+
+	tx.Exec(`
+		UPDATE posts
+		SET likes = likes - 1
+		WHERE id = $1
+	`, postID)
+	tx.Exec(`DELETE FROM post_likes WHERE post_id = $1 AND user_id = $2`, postID, s.UserID)
+
+	err = tx.Commit()
+	if err != nil {
+		http.Error(w, "Couldn't remove like", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Done"))
+}
+
+func doesUserLikePost(w http.ResponseWriter, r *http.Request) {
+	postID := chi.URLParam(r, "postID")
+	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
+	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+
+	if !ok {
+		http.Error(w, "Authentication required", http.StatusUnauthorized)
+		return
+	}
+
+	result := false
+	row := db.QueryRow(`SELECT EXISTS(SELECT * FROM post_likes WHERE post_id = $1 AND user_id = $2)`, postID, s.UserID)
+	if err := row.Err(); err != nil {
+		http.Error(w, "Couldn't fetch", http.StatusInternalServerError)
+		return
+	}
+	if err := row.Scan(&result); err != nil {
+		http.Error(w, "Couldn't fetch", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(struct {
+		Result bool `json:"result"`
+	}{Result: result})
+	if err != nil {
+		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 func postComments(w http.ResponseWriter, r *http.Request) {

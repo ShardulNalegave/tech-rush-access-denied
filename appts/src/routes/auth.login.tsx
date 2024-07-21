@@ -15,14 +15,14 @@ function AuthLoginPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-		const res = await queryClient.fetchQuery(login(email, password));
+		const res = await queryClient.fetchQuery(login({ email, password }));
 		if (res === true) {
 			window.location.replace('/feed');
 		}
   };
 
   return (
-		<div className="min-h-screen flex items-center bg-gray-100 justify-center p-8 overflow-hidden">
+		<div className="min-h-full flex items-center bg-gray-100 justify-center p-8 overflow-hidden">
 			<div className="relative rounded-lg h-[70vh] max-w-[80vw] w-full bg-white p-10 shadow-lg">
 				<div className="absolute top-0 left-1/2 h-full w-1/2 z-[99] hidden lg:block">
 					<div className="absolute top-0 left-0 h-full w-full z-[10]">
