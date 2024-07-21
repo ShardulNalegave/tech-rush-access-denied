@@ -29,6 +29,19 @@ export const getUser = (id: string) => queryOptions({
   },
 });
 
+export const getUsers = () => queryOptions({
+  queryKey: ['getUsers'],
+  queryFn: async (): Promise<IUser[] | null> => {
+    try {
+      const res = await fetch(`${backendURL}/users`, { credentials: 'include' })
+      if (res.status != 200) return null;
+      return await res.json();
+    } catch (_) {
+      return null;
+    }
+  },
+});
+
 export const getUserPosts = (id: string) => queryOptions({
   queryKey: ['getUserPosts'],
   queryFn: async (): Promise<IPost[] | null> => {

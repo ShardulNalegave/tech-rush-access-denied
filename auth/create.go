@@ -3,7 +3,11 @@ package auth
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
+	"os"
+	"path"
+	"strconv"
 
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
@@ -14,6 +18,11 @@ import (
 )
 
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	baseDir := os.Getenv("MOSAICIFY_STORAGE_DIR")
+	if baseDir == "" {
+		log.Fatal().Msg("MOSAICIFY_STORAGE_DIR was not provided")
+	}
+
 	_, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
 
@@ -66,6 +75,19 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
 		return
 	}
+
+	fname := strconv.Itoa(int(id))
+	fpath := path.Join(baseDir, "profile_pics", fname)
+
+	defaultPfp := path.Join(baseDir, "defaultProfilePic")
+
+	fdPfp, _ := os.Open(defaultPfp)
+	defer fdPfp.Close()
+
+	f, _ := os.Create(fpath)
+	defer f.Close()
+
+	_, _ = io.Copy(f, fdPfp)
 
 	log.Info().
 		Str("Address", r.RemoteAddr).

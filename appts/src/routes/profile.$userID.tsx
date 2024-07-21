@@ -4,6 +4,7 @@ import { backendURL, queryClient } from '../query/query';
 import { doesFollowUser, followUser, getLoggedInUser, getUser, getUserLikedPosts, getUserPosts, unfollowUser } from '../query/users';
 import { useQuery } from '@tanstack/react-query';
 import ImageGrid from '../components/imageGrid';
+import NotFound from '../components/notFound';
 
 enum Tabs {
   Posts,
@@ -43,7 +44,7 @@ function UserProfilePage() {
   };
 
   if (isPending) return <></>;
-  if (!data) return <></>;
+  if (!data) return <NotFound />;
 
   return (
     <div className='flex flex-col items-center pt-[50px]'>
@@ -108,12 +109,18 @@ function UserPosts({ uid } : { uid: number }) {
   const { isPending, data } = useQuery(getUserPosts(uid.toString()))
 
   if (isPending) return <></>;
-  return <ImageGrid posts={data || []} />;
+  return <ImageGrid posts={data || []} emptyMsg={{
+    title: 'No Posts!',
+    desc: 'Post some pictures and they will show up here'
+  }} />;
 }
 
 function UserLikedPosts({ uid } : { uid: number }) {
   const { isPending, data } = useQuery(getUserLikedPosts(uid.toString()))
 
   if (isPending) return <></>;
-  return <ImageGrid posts={data || []} />;
+  return <ImageGrid posts={data || []} emptyMsg={{
+    title: 'No Liked Posts!',
+    desc: 'Like some posts and they will show up here'
+  }} />;
 }

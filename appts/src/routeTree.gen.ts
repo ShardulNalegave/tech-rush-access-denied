@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as FeedImport } from './routes/feed'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProfileIndexImport } from './routes/profile.index'
+import { Route as PostsIndexImport } from './routes/posts.index'
 import { Route as ProfileEditImport } from './routes/profile.edit'
 import { Route as ProfileUserIDImport } from './routes/profile.$userID'
 import { Route as PostsCreateImport } from './routes/posts.create'
@@ -30,6 +32,16 @@ const FeedRoute = FeedImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileIndexRoute = ProfileIndexImport.update({
+  path: '/profile/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsIndexRoute = PostsIndexImport.update({
+  path: '/posts/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -135,6 +147,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileEditImport
       parentRoute: typeof rootRoute
     }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -150,6 +176,8 @@ export const routeTree = rootRoute.addChildren({
   PostsCreateRoute,
   ProfileUserIDRoute,
   ProfileEditRoute,
+  PostsIndexRoute,
+  ProfileIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -168,7 +196,9 @@ export const routeTree = rootRoute.addChildren({
         "/posts/$postID",
         "/posts/create",
         "/profile/$userID",
-        "/profile/edit"
+        "/profile/edit",
+        "/posts/",
+        "/profile/"
       ]
     },
     "/": {
@@ -197,6 +227,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/profile/edit": {
       "filePath": "profile.edit.tsx"
+    },
+    "/posts/": {
+      "filePath": "posts.index.tsx"
+    },
+    "/profile/": {
+      "filePath": "profile.index.tsx"
     }
   }
 }
