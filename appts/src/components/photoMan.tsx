@@ -4,6 +4,7 @@ import {
   Preload,
   useGLTF,
   useAnimations,
+  Html,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 // import * as THREE from "three";
@@ -29,7 +30,13 @@ export default function PhotoMan() {
   return (
     <div className="w-full h-full    ">
       <Canvas camera={{ fov: 3 }}>
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Html>
+              <div className="text-5xl text-black">Loading...</div>
+            </Html>
+          }
+        >
           <OrbitControls
             enableZoom={false}
             enablePan={false}
