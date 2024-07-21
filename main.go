@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	defaultPort = "8080"
+	defaultPort = "5000"
 )
 
 func main() {
@@ -24,11 +24,6 @@ func main() {
 
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-
-	port := os.Getenv("MOSAICIFY_PORT")
-	if port == "" {
-		port = defaultPort
-	}
 
 	db := database.ConnectToDatabase()
 	sm := sessions.NewSessionManager()

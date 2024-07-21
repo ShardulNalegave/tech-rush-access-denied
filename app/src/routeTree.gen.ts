@@ -11,48 +11,22 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TestfeedImport } from './routes/test_feed'
-import { Route as TestImport } from './routes/test'
-import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as FeedImport } from './routes/feed'
-import { Route as ErrorpageImport } from './routes/errorpage'
-import { Route as PostImport } from './routes/Post'
 import { Route as IndexImport } from './routes/index'
-import { Route as ProfileIndexImport } from './routes/profile/index'
-import { Route as ProfileEditImport } from './routes/profile/edit'
-import { Route as ProfileUserIDImport } from './routes/profile/$userID'
-import { Route as AuthSignupImport } from './routes/auth/signup'
-import { Route as AuthLoginImport } from './routes/auth/login'
+import { Route as ProfileIndexImport } from './routes/profile.index'
+import { Route as PostsIndexImport } from './routes/posts.index'
+import { Route as ProfileEditImport } from './routes/profile.edit'
+import { Route as ProfileUserIDImport } from './routes/profile.$userID'
+import { Route as PostsCreateImport } from './routes/posts.create'
+import { Route as PostsPostIDImport } from './routes/posts.$postID'
+import { Route as PortfolioUserIDImport } from './routes/portfolio.$userID'
+import { Route as AuthSignupImport } from './routes/auth.signup'
+import { Route as AuthLoginImport } from './routes/auth.login'
 
 // Create/Update Routes
 
-const TestfeedRoute = TestfeedImport.update({
-  path: '/test_feed',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const TestRoute = TestImport.update({
-  path: '/test',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PortfolioRoute = PortfolioImport.update({
-  path: '/portfolio',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const FeedRoute = FeedImport.update({
   path: '/feed',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ErrorpageRoute = ErrorpageImport.update({
-  path: '/errorpage',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostRoute = PostImport.update({
-  path: '/Post',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -66,6 +40,11 @@ const ProfileIndexRoute = ProfileIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PostsIndexRoute = PostsIndexImport.update({
+  path: '/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ProfileEditRoute = ProfileEditImport.update({
   path: '/profile/edit',
   getParentRoute: () => rootRoute,
@@ -73,6 +52,21 @@ const ProfileEditRoute = ProfileEditImport.update({
 
 const ProfileUserIDRoute = ProfileUserIDImport.update({
   path: '/profile/$userID',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsCreateRoute = PostsCreateImport.update({
+  path: '/posts/create',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIDRoute = PostsPostIDImport.update({
+  path: '/posts/$postID',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PortfolioUserIDRoute = PortfolioUserIDImport.update({
+  path: '/portfolio/$userID',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -97,46 +91,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/Post': {
-      id: '/Post'
-      path: '/Post'
-      fullPath: '/Post'
-      preLoaderRoute: typeof PostImport
-      parentRoute: typeof rootRoute
-    }
-    '/errorpage': {
-      id: '/errorpage'
-      path: '/errorpage'
-      fullPath: '/errorpage'
-      preLoaderRoute: typeof ErrorpageImport
-      parentRoute: typeof rootRoute
-    }
     '/feed': {
       id: '/feed'
       path: '/feed'
       fullPath: '/feed'
       preLoaderRoute: typeof FeedImport
-      parentRoute: typeof rootRoute
-    }
-    '/portfolio': {
-      id: '/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioImport
-      parentRoute: typeof rootRoute
-    }
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestImport
-      parentRoute: typeof rootRoute
-    }
-    '/test_feed': {
-      id: '/test_feed'
-      path: '/test_feed'
-      fullPath: '/test_feed'
-      preLoaderRoute: typeof TestfeedImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -153,6 +112,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/portfolio/$userID': {
+      id: '/portfolio/$userID'
+      path: '/portfolio/$userID'
+      fullPath: '/portfolio/$userID'
+      preLoaderRoute: typeof PortfolioUserIDImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/$postID': {
+      id: '/posts/$postID'
+      path: '/posts/$postID'
+      fullPath: '/posts/$postID'
+      preLoaderRoute: typeof PostsPostIDImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/create': {
+      id: '/posts/create'
+      path: '/posts/create'
+      fullPath: '/posts/create'
+      preLoaderRoute: typeof PostsCreateImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/$userID': {
       id: '/profile/$userID'
       path: '/profile/$userID'
@@ -165,6 +145,13 @@ declare module '@tanstack/react-router' {
       path: '/profile/edit'
       fullPath: '/profile/edit'
       preLoaderRoute: typeof ProfileEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexImport
       parentRoute: typeof rootRoute
     }
     '/profile/': {
@@ -181,16 +168,15 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  PostRoute,
-  ErrorpageRoute,
   FeedRoute,
-  PortfolioRoute,
-  TestRoute,
-  TestfeedRoute,
   AuthLoginRoute,
   AuthSignupRoute,
+  PortfolioUserIDRoute,
+  PostsPostIDRoute,
+  PostsCreateRoute,
   ProfileUserIDRoute,
   ProfileEditRoute,
+  PostsIndexRoute,
   ProfileIndexRoute,
 })
 
@@ -203,54 +189,50 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/Post",
-        "/errorpage",
         "/feed",
-        "/portfolio",
-        "/test",
-        "/test_feed",
         "/auth/login",
         "/auth/signup",
+        "/portfolio/$userID",
+        "/posts/$postID",
+        "/posts/create",
         "/profile/$userID",
         "/profile/edit",
+        "/posts/",
         "/profile/"
       ]
     },
     "/": {
-      "filePath": "index.jsx"
-    },
-    "/Post": {
-      "filePath": "Post.jsx"
-    },
-    "/errorpage": {
-      "filePath": "errorpage.jsx"
+      "filePath": "index.tsx"
     },
     "/feed": {
-      "filePath": "feed.jsx"
-    },
-    "/portfolio": {
-      "filePath": "portfolio.jsx"
-    },
-    "/test": {
-      "filePath": "test.jsx"
-    },
-    "/test_feed": {
-      "filePath": "test_feed.jsx"
+      "filePath": "feed.tsx"
     },
     "/auth/login": {
-      "filePath": "auth/login.jsx"
+      "filePath": "auth.login.tsx"
     },
     "/auth/signup": {
-      "filePath": "auth/signup.jsx"
+      "filePath": "auth.signup.tsx"
+    },
+    "/portfolio/$userID": {
+      "filePath": "portfolio.$userID.tsx"
+    },
+    "/posts/$postID": {
+      "filePath": "posts.$postID.tsx"
+    },
+    "/posts/create": {
+      "filePath": "posts.create.tsx"
     },
     "/profile/$userID": {
-      "filePath": "profile/$userID.jsx"
+      "filePath": "profile.$userID.tsx"
     },
     "/profile/edit": {
-      "filePath": "profile/edit.jsx"
+      "filePath": "profile.edit.tsx"
+    },
+    "/posts/": {
+      "filePath": "posts.index.tsx"
     },
     "/profile/": {
-      "filePath": "profile/index.jsx"
+      "filePath": "profile.index.tsx"
     }
   }
 }
