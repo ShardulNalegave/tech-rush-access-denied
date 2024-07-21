@@ -1,9 +1,8 @@
-
-import { useState } from 'react';
-import gsap from 'gsap';
-import { Link } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { getLoggedInUser } from '../utils/query';
+import { useState } from "react";
+import gsap from "gsap";
+import { Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getLoggedInUser } from "../utils/query";
 
 export default function Navbar() {
   const { data, isPending } = useSuspenseQuery(getLoggedInUser);
@@ -39,7 +38,7 @@ export default function Navbar() {
   return (
     <>
       {/* fixed  */}
-      <div className=" w-[100vw]  bg-white border-gray-600 shadow-2xl  Title h-[7vh] backdrop-blur-2xl border-b  overflow-hidden font  flex justify-center items-center transition-all flex-col">
+      <div className=" w-[100vw]   bg-white border-gray-600 shadow-2xl  Title h-[7vh] backdrop-blur-2xl border-b  overflow-hidden font  flex justify-center items-center transition-all flex-col">
         <nav className="w-11/12  h-full flex  justify-between items-center">
           <div className="h-full">
             <Link to="/" className="">
@@ -52,46 +51,45 @@ export default function Navbar() {
 
           <div>
             <ul className="flex gap-3 md:text-xl">
-              {
-                !isPending && data ?
-                  <>
-                    <li>
-                      <Link
-                        to="/portfolio"
-                        className="[&.active]:border-b-2 border-yellow-500"
-                      >
-                        Portfolio
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/profile"
-                        className="[&.active]:border-b-2 border-yellow-500"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                  </>
-                  :
-                  <>
-                    <li>
-                      <Link
-                        to="/auth/login"
-                        className="[&.active]:border-b-2 border-yellow-500"
-                      >
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/auth/signup"
-                        className="[&.active]:border-b-2 border-yellow-500"
-                      >
-                        Signup
-                      </Link>
-                    </li>
-                  </>
-              }
+              {!isPending && data ? (
+                <>
+                  <li>
+                    <Link
+                      to="/portfolio"
+                      className="[&.active]:border-b-2 border-yellow-500"
+                    >
+                      Portfolio
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/profile"
+                      className="[&.active]:border-b-2 border-yellow-500"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to="/auth/login"
+                      className="[&.active]:border-b-2 border-yellow-500"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/auth/signup"
+                      className="[&.active]:border-b-2 border-yellow-500"
+                    >
+                      Signup
+                    </Link>
+                  </li>
+                </>
+              )}
 
               <li>
                 <img

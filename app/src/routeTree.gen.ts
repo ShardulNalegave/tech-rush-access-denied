@@ -16,6 +16,7 @@ import { Route as TestImport } from './routes/test'
 import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as FeedImport } from './routes/feed'
 import { Route as ErrorpageImport } from './routes/errorpage'
+import { Route as PostImport } from './routes/Post'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as ProfileEditImport } from './routes/profile/edit'
@@ -47,6 +48,11 @@ const FeedRoute = FeedImport.update({
 
 const ErrorpageRoute = ErrorpageImport.update({
   path: '/errorpage',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostRoute = PostImport.update({
+  path: '/Post',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -89,6 +95,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/Post': {
+      id: '/Post'
+      path: '/Post'
+      fullPath: '/Post'
+      preLoaderRoute: typeof PostImport
       parentRoute: typeof rootRoute
     }
     '/errorpage': {
@@ -168,6 +181,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  PostRoute,
   ErrorpageRoute,
   FeedRoute,
   PortfolioRoute,
@@ -189,6 +203,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/Post",
         "/errorpage",
         "/feed",
         "/portfolio",
@@ -203,6 +218,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/": {
       "filePath": "index.jsx"
+    },
+    "/Post": {
+      "filePath": "Post.jsx"
     },
     "/errorpage": {
       "filePath": "errorpage.jsx"
