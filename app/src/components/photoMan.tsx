@@ -16,9 +16,8 @@ const Model = () => {
     if (actions) {
       Object.keys(actions).forEach((key) => {
         if (actions[key] === null) return;
-        actions[key].reset().play(); // Play each action
-        // actions[key].setLoop(THREE.LoopRepeat); // Set looping
-        actions[key].timeScale = 1; // Set speed to 2x
+        actions[key].reset().play();
+        actions[key].timeScale = 1;
       });
     }
   }, [actions]);
@@ -47,7 +46,6 @@ export default function PhotoMan() {
           />
           <pointLight intensity={0.2} />
           <spotLight intensity={8} />
-          {/* <directionalLight intensity={2} /> */}
           <Model />
         </Suspense>
         <Preload all />
