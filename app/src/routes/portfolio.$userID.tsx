@@ -109,7 +109,7 @@ function UserPortfolioPage() {
       <hr className="bg-yellow-500 h-2" />
       <div
         id="Scroll"
-        className="w-[100vw] h-full overflow-x-auto overflow-y-hidden snap-start bg-zinc-950"
+        className={`w-[100vw] h-full overflow-x-auto overflow-y-hidden snap-start bg-zinc-950 ${posts && posts.length != 0 ? 'block' : 'hidden' }`}
         ref={scrollContainerRef}
         style={{ whiteSpace: "nowrap" }}
       >
