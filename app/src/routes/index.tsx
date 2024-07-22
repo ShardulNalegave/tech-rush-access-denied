@@ -61,25 +61,34 @@ function Index() {
         <div className="bg-cyan-100 h-full max-w-[100vw] items-center justify-center flex">
           <div className=" lg:flex-1">
             <img
+              alt="Pot"
+              src="/image.png"
+              className="w-full  scale-90 h-full  hidden lg:block"
+            />
+            {/* <img
               src="/imgs/1.jpg"
+              loading="lazy"
               className="h-[70vh] w-[19vw] z-[10] rounded-3xl object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 relative top-[26rem] left-[260px] hidden lg:block"
               alt=""
             />
             <img
+              loading="lazy"
               src="/imgs/8.jpg"
               className="h-[40vh] w-[15vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-3xl relative top-44 left-32 hidden lg:block"
               alt=""
             />
             <img
+              loading="lazy"
               src="/imgs/5.jpg"
               className="h-[50vh] w-[17vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-3xl relative bottom-64 left-[430px] hidden lg:block"
               alt=""
             />
             <img
+              loading="lazy"
               src="/imgs/9.jpg"
               className="h-[30vh] w-[14vw] object-cover shadow-2xl drop-shadow-2xl shadow-slate-900 rounded-3xl relative bottom-[710px] left-28 hidden lg:block"
               alt=""
-            />
+            /> */}
           </div>
           <div className="flex-1 flex flex-col justify-center items-center px-10">
             <h3 className="text-7xl flex justify-center items-center flex-col font-heading font-bold text-red-700">

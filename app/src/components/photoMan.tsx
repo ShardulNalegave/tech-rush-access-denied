@@ -9,7 +9,7 @@ import {
 import { Canvas } from "@react-three/fiber";
 // import * as THREE from "three";
 const Model = () => {
-  const { scene, animations } = useGLTF("public/final_model/scene.gltf");
+  const { scene, animations } = useGLTF("/final_model/scene.gltf");
   const { actions } = useAnimations(animations, scene);
 
   React.useEffect(() => {

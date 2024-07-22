@@ -1,14 +1,18 @@
-import { createFileRoute, getRouteApi, useNavigate } from '@tanstack/react-router';
-import { TypeAnimation } from 'react-type-animation';
-import { backendURL, queryClient } from '../query/query';
-import { getUser, getUserPosts } from '../query/users';
-import NotFound from '../components/notFound';
-import { useEffect, useRef, useState } from 'react';
-import PortScroll from '../components/portScroll';
-import { useQuery } from '@tanstack/react-query';
+import {
+  createFileRoute,
+  getRouteApi,
+  useNavigate,
+} from "@tanstack/react-router";
+import { TypeAnimation } from "react-type-animation";
+import { backendURL, queryClient } from "../query/query";
+import { getUser, getUserPosts } from "../query/users";
+import NotFound from "../components/notFound";
+import { useEffect, useRef, useState } from "react";
+import PortScroll from "../components/portScroll";
+import { useQuery } from "@tanstack/react-query";
 
-const routeAPI = getRouteApi('/portfolio/$userID');
-export const Route = createFileRoute('/portfolio/$userID')({
+const routeAPI = getRouteApi("/portfolio/$userID");
+export const Route = createFileRoute("/portfolio/$userID")({
   component: UserPortfolioPage,
   loader: async ({ params }) => queryClient.fetchQuery(getUser(params.userID)),
 });
@@ -20,7 +24,8 @@ function UserPortfolioPage() {
 
   const { isPending, data: posts } = useQuery(getUserPosts(params.userID));
 
-  const [horizontalScrollCompleted, setHorizontalScrollCompleted] = useState(false);
+  const [horizontalScrollCompleted, setHorizontalScrollCompleted] =
+    useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -28,8 +33,7 @@ function UserPortfolioPage() {
       const scrollContainer = scrollContainerRef.current;
       if (!scrollContainerRef || !scrollContainer) return;
 
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainer;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
       if (scrollLeft + clientWidth >= scrollWidth - 1) {
         setHorizontalScrollCompleted(true);
       } else {
@@ -46,10 +50,11 @@ function UserPortfolioPage() {
   if (isPending) <></>;
   if (!user) return <NotFound />;
   return (
-    <div className={`w-[100vw] h-full overflow-x-hidden overflow-y-scroll snap-y snap-mandatory ${
-      horizontalScrollCompleted ? "h-[200vh]" : "h-[100vh]"
-    }`}>
-
+    <div
+      className={`w-[100vw] h-full overflow-x-hidden overflow-y-scroll snap-y snap-mandatory ${
+        horizontalScrollCompleted ? "h-[200vh]" : "h-[100vh]"
+      }`}
+    >
       <div className="bg-black w-full h-full snap-start grid grid-cols-1 lg:grid-cols-2 overflow-y-hidden">
         <div className="my-5 px-5 lg:px-16 lg:py-20 flex flex-col justify-start md:justify-center lg:justify-start">
           <div className="grow"></div>
@@ -62,26 +67,24 @@ function UserPortfolioPage() {
               wrapper="h1"
               speed={5}
               repeat={Infinity}
-              sequence={[
-                `I'm ${user.name}`,
-                1500,
-                "I'm",
-                1500,
-              ]}
+              sequence={[`I'm ${user.name}`, 1500, "I'm", 1500]}
             />
           </div>
-          <h1 className='mt-8 text-gray-400 font-mono'>{ user.bio }</h1>
+          <h1 className="mt-8 text-gray-400 font-mono">{user.bio}</h1>
           <h1 className="mt-4 font-secondary font-normal text-gray-400 text-xl text-left">
-            { user.about }
+            {user.about}
           </h1>
 
-          <div className='h-[25px]'></div>
+          <div className="h-[25px]"></div>
 
           <div className="flex">
-            <button className="inline-block lg:w-auto mt-4 lg:mt-0 bg-transparent transition duration-500 ease-in-out hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-black py-4 px-6 border border-yellow-500 hover:border-transparent rounded" onClick={() => navigate({ to: `/profile/${user.id}` })}>
+            <button
+              className="inline-block lg:w-auto mt-4 lg:mt-0 bg-transparent transition duration-500 ease-in-out hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-black py-4 px-6 border border-yellow-500 hover:border-transparent rounded"
+              onClick={() => navigate({ to: `/profile/${user.id}` })}
+            >
               View Profile
             </button>
-            <div className='w-[10px]'></div>
+            <div className="w-[10px]"></div>
             <button className="inline-block lg:w-auto mt-4 lg:mt-0 bg-transparent transition duration-500 ease-in-out hover:bg-yellow-500 text-yellow-500 font-semibold hover:text-black py-4 px-6 border border-yellow-500 hover:border-transparent rounded">
               <a href={`mailto:${user.email}`}>Mail me!</a>
             </button>
@@ -110,9 +113,8 @@ function UserPortfolioPage() {
         ref={scrollContainerRef}
         style={{ whiteSpace: "nowrap" }}
       >
-        {posts ? <PortScroll postIDs={posts.map(post => post.id)} /> : <></>}
+        {posts ? <PortScroll postIDs={posts.map((post) => post.id)} /> : <></>}
       </div>
-
     </div>
   );
 }

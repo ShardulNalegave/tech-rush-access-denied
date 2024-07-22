@@ -23,7 +23,18 @@
     src: url(/fonts/SFPRODISPLAYREGULAR.OTF) format("opentype");
   }
 }
-
+.Title {
+  font-family: "Bayon";
+}
+.SFB {
+  font-family: "SFB";
+}
+.SFR {
+  font-family: "SFR";
+}
+.Section {
+  font-family: "ABeeZee";
+}
 html {
   scroll-behavior: smooth;
 }
