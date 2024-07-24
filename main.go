@@ -44,8 +44,8 @@ func main() {
 	routes.MountRoutes(r)
 
 	log.Info().
-		Str("Port", port).
+		Str("Port", defaultPort).
 		Msg("Listening...")
-	err := http.ListenAndServe(":"+port, r)
+	err := http.ListenAndServe(":"+defaultPort, r)
 	log.Fatal().Err(err).Msg("Shutting down...")
 }
