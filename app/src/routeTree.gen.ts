@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TestImport } from './routes/test'
 import { Route as FeedImport } from './routes/feed'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile.index'
@@ -24,6 +25,11 @@ import { Route as AuthSignupImport } from './routes/auth.signup'
 import { Route as AuthLoginImport } from './routes/auth.login'
 
 // Create/Update Routes
+
+const TestRoute = TestImport.update({
+  path: '/test',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const FeedRoute = FeedImport.update({
   path: '/feed',
@@ -98,6 +104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeedImport
       parentRoute: typeof rootRoute
     }
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/login': {
       id: '/auth/login'
       path: '/auth/login'
@@ -169,6 +182,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   FeedRoute,
+  TestRoute,
   AuthLoginRoute,
   AuthSignupRoute,
   PortfolioUserIDRoute,
@@ -190,6 +204,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/feed",
+        "/test",
         "/auth/login",
         "/auth/signup",
         "/portfolio/$userID",
@@ -206,6 +221,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/feed": {
       "filePath": "feed.tsx"
+    },
+    "/test": {
+      "filePath": "test.jsx"
     },
     "/auth/login": {
       "filePath": "auth.login.tsx"
