@@ -32,9 +32,9 @@ function Test() {
           </span>
         </button>
       </Link>
-      <div className="h-[15px]"></div>
+      <div className="h-[0px]"></div>
       <hr />
-      <div className="h-[15px]"></div>
+      <div className="h-[20px]"></div>
       <Link to={`/}`}>
         <button class="button w-full">
           <span class="button_lg">
