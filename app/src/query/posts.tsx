@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { IComment, IPost } from './models';
+import { IComment, IPost, ISearchPost } from './models';
 import { backendURL } from './query';
 
 export const getFeedPosts = () => queryOptions({
@@ -44,6 +44,7 @@ export const getPosts = () => queryOptions({
 export const createPost = (payload: {
   data: string,
   caption: string,
+  keywords: string[],
 }) => queryOptions({
   queryKey: ['createPost'],
   queryFn: async (): Promise<IPost | null> => {
@@ -133,5 +134,24 @@ export const addPostComment = (id: string, content: string) => queryOptions({
       body: JSON.stringify({ content }),
     });
     return res.status === 200;
+  },
+});
+
+export const searchPosts = (query: string) => queryOptions({
+  queryKey: ['searchPosts'],
+  gcTime: 0,
+  queryFn: async (): Promise<ISearchPost[] | null> => {
+    try {
+      const res = await fetch(`${backendURL}/posts/search`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ query }),
+      });
+  
+      if (res.status != 200) return null;
+      return await res.json();
+    } catch (_) {
+      return null;
+    }
   },
 });

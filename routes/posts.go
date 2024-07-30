@@ -11,10 +11,12 @@ import (
 	"time"
 
 	"github.com/ShardulNalegave/tech-rush-access-denied/models"
+	"github.com/ShardulNalegave/tech-rush-access-denied/search"
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/ShardulNalegave/tech-rush-access-denied/utils"
 	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
+	"github.com/meilisearch/meilisearch-go"
 	"github.com/rs/zerolog/log"
 )
 
@@ -23,6 +25,7 @@ func mountPostsRoutes(r *chi.Mux) {
 	r.Post("/posts", createPost)
 	r.Get("/posts/current", getLoggedInUserPosts)
 	r.Get("/posts/current/feed", getLoggedInUserFeed)
+	r.Post("/posts/search", searchPosts)
 	r.Get("/posts/{postID}", getPost)
 	r.Get("/posts/{postID}/likes", getPostLikes)
 	r.Post("/posts/{postID}/likes", likePost)
@@ -31,6 +34,36 @@ func mountPostsRoutes(r *chi.Mux) {
 	r.Get("/posts/{postID}/comments", postComments)
 	r.Post("/posts/{postID}/comments", addComment)
 	r.Delete("/posts/{postID}", deletePost)
+}
+
+func searchPosts(w http.ResponseWriter, r *http.Request) {
+	srch := r.Context().Value(utils.SearchKey).(*search.Search)
+
+	var body struct {
+		Query string `json:"query"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	resp, err := srch.ImagesIndex.Search(body.Query, &meilisearch.SearchRequest{
+		Limit: 10,
+	})
+
+	if err != nil {
+		http.Error(w, "Couldn't search", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(resp.Hits)
+	if err != nil {
+		http.Error(w, "JSON Marshalling error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 func getLoggedInUserFeed(w http.ResponseWriter, r *http.Request) {
@@ -147,6 +180,7 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 func createPost(w http.ResponseWriter, r *http.Request) {
 	s, ok := r.Context().Value(utils.AuthKey).(sessions.Session)
 	db := r.Context().Value(utils.DatabaseKey).(*sqlx.DB)
+	srch := r.Context().Value(utils.SearchKey).(*search.Search)
 
 	if !ok {
 		http.Error(w, "Authentication required", http.StatusUnauthorized)
@@ -159,8 +193,9 @@ func createPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var body struct {
-		Caption string  `json:"caption"`
-		Data    *string `json:"data"`
+		Caption  string   `json:"caption"`
+		Data     *string  `json:"data"`
+		Keywords []string `json:"keywords"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -210,6 +245,10 @@ func createPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not save image", http.StatusInternalServerError)
 		return
 	}
+
+	srch.ImagesIndex.AddDocuments([]map[string]any{
+		{"id": pID, "posted_by": s.UserID, "caption": body.Caption, "keywords": body.Keywords},
+	})
 
 	data, _ := json.Marshal(models.Post{
 		ID:        pID,

@@ -7,6 +7,7 @@ import (
 	"github.com/ShardulNalegave/tech-rush-access-denied/auth"
 	"github.com/ShardulNalegave/tech-rush-access-denied/database"
 	"github.com/ShardulNalegave/tech-rush-access-denied/routes"
+	"github.com/ShardulNalegave/tech-rush-access-denied/search"
 	"github.com/ShardulNalegave/tech-rush-access-denied/sessions"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
@@ -26,6 +27,7 @@ func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
 	db := database.ConnectToDatabase()
+	s := search.ConnectToSearch()
 	sm := sessions.NewSessionManager()
 
 	r := chi.NewRouter()
@@ -39,6 +41,7 @@ func main() {
 
 	r.Use(auth.SecureCookieMiddleware())
 	r.Use(database.DatabaseMiddleware(db))
+	r.Use(search.SearchMiddleware(s))
 	r.Use(sessions.SessionManagerMiddleware(sm))
 	r.Use(auth.AuthMiddleware())
 	routes.MountRoutes(r)

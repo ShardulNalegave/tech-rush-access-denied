@@ -1,6 +1,6 @@
 
 import { Link } from '@tanstack/react-router';
-import { IPost } from '../query/models';
+import { IPost, ISearchPost } from '../query/models';
 import { backendURL } from '../query/query';
 
 export default function ImageGrid({ posts, emptyMsg } : { posts: IPost[], emptyMsg: EmptyGridProps }) {
@@ -42,6 +42,32 @@ export default function ImageGrid({ posts, emptyMsg } : { posts: IPost[], emptyM
           ))}
         </div>
         : <EmptyGrid {...emptyMsg} />
+      }
+    </div>
+  );
+}
+
+export function SearchImageGrid({ posts } : { posts: ISearchPost[] }) {
+  return (
+    <div className="mt-5 mx-8">
+      {posts.length > 0 ?
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {posts.map(post => (
+            <Link key={post.id} to={`/posts/${post.id}`}>
+              <div
+                className="relative overflow-hidden rounded-lg shadow-md hover:scale-95 hover:shadow-xl transition duration-100"
+              >
+                <img
+                  loading="lazy"
+                  src={`${backendURL}/storage/posts/${post.id}`}
+                  alt={post.caption}
+                  className={`w-full object-cover h-[200px] md:h-[300px] lg:h-[500px]`}
+                />
+              </div>
+            </Link>
+          ))}
+        </div>
+        : <></>
       }
     </div>
   );

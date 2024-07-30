@@ -9,29 +9,41 @@ export default function ExploreSidebar() {
   if (!data) return <></>;
 
   return (
-    <div className='h-full w-[250px] border-solid border-r-[2px] border-zinc-950 border-opacity-50 p-[10px] hidden md:block'>
-      <Link to='/feed'>
-        <div className='border-solid border-[1px] border-zinc-950 border-opacity-30 rounded bg-white p-[15px] mb-[10px] hover:bg-zinc-800 hover:text-white duration-100'>
-          Feed
-        </div>
+    <div className="h-full w-[250px] border-solid border-r-[2px] border-zinc-950 border-opacity-50 p-[10px] hidden md:block">
+      <Link to="/feed">
+        <button className="button w-full">
+          <span className="button_lg">
+            <span className="button_sl"></span>
+            <span className="button_text">Feed</span>
+          </span>
+        </button>
       </Link>
-      <Link to='/posts'>
-        <div className='border-solid border-[1px] border-zinc-950 border-opacity-30 rounded bg-white p-[15px] mb-[10px] hover:bg-zinc-800 hover:text-white duration-100'>
-          All Posts
-        </div>
+      <Link to="/posts">
+        <button className="button w-full">
+          <span className="button_lg">
+            <span className="button_sl"></span>
+            <span className="button_text">All posts</span>
+          </span>
+        </button>
       </Link>
-      <Link to='/profile'>
-        <div className='border-solid border-[1px] border-zinc-950 border-opacity-30 rounded bg-white p-[15px] hover:bg-zinc-800 hover:text-white duration-100'>
-          Users
-        </div>
+      <Link to={`/profile`}>
+        <button className="button w-full">
+          <span className="button_lg">
+            <span className="button_sl"></span>
+            <span className="button_text">Users</span>
+          </span>
+        </button>
       </Link>
-      <div className="h-[15px]"></div>
+      <div className="h-[0px]"></div>
       <hr />
-      <div className="h-[15px]"></div>
+      <div className="h-[20px]"></div>
       <Link to={`/profile/${data.id}`}>
-        <div className='border-solid border-[1px] border-zinc-950 border-opacity-30 rounded bg-white p-[15px] hover:bg-zinc-800 hover:text-white duration-100'>
-          My Profile
-        </div>
+        <button className="button w-full">
+          <span className="button_lg">
+            <span className="button_sl"></span>
+            <span className="button_text">My Profile</span>
+          </span>
+        </button>
       </Link>
     </div>
   );

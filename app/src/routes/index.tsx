@@ -63,7 +63,7 @@ function Index() {
             <img
               alt="Pot"
               src="/image.png"
-              className="w-full  scale-90 h-full  hidden lg:block"
+              className="w-full  scale-75 h-full  hidden lg:block"
             />
             {/* <img
               src="/imgs/1.jpg"

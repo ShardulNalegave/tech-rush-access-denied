@@ -59,5 +59,6 @@ func ConnectToDatabase() *sqlx.DB {
 		log.Fatal().Err(err).Msg("Could not run initialization query on the database")
 	}
 
+	log.Info().Msg("Connected to PostgreSQL")
 	return db
 }

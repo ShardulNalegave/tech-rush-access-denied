@@ -33,6 +33,7 @@ func NewSessionManager() *SessionManager {
 		Password: pass,
 	})
 
+	log.Info().Msg("Connected to Redis")
 	return &SessionManager{client: client}
 }
 

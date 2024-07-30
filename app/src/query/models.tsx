@@ -17,6 +17,12 @@ export interface IPost {
   created_at: Date,
 }
 
+export interface ISearchPost {
+  id: number,
+  caption: string,
+  posted_by: number,
+}
+
 export interface IComment {
   id: number,
   post_id: number,

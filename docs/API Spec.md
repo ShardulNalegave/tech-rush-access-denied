@@ -59,6 +59,9 @@ Get posts by currently logged in user
 - GET - `/posts/current/feed` \
 Get feed posts for currently logged in user
 
+- POST - `/posts/search` \
+Search for posts on mosaicify
+
 - GET - `/posts/{postID}` \
 Get post with `id = postID`
 

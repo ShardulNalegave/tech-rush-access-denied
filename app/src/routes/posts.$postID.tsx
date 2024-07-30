@@ -51,6 +51,10 @@ function GetPost() {
   };
 
   const handleNewComment = async () => {
+    if (!user) {
+      alert('Please login to comment!');
+      return;
+    }
     await queryClient.fetchQuery(addPostComment(params.postID, comment));
     setComment('');
     refetchComments();

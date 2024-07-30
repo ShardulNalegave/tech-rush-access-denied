@@ -12,9 +12,12 @@ export const Route = createFileRoute('/posts/create')({
 function CreatePostPage() {
   const router = useRouter();
   const [caption, setCaption] = useState('');
+  const [keywords, setKeywords] = useState('');
   const postPicRef = useRef<HTMLInputElement>(null);
 
   const handleCreatePost = () => {
+    const kwds = keywords.split(',').map(s => s.trim());
+
     const files = postPicRef.current?.files;
     if (files === null || files === undefined) {
       alert('Please select a file first');
@@ -30,7 +33,7 @@ function CreatePostPage() {
     reader.onload = async () => {
       const data = reader.result?.toString().replace("data:", "").replace(/^.+,/, "");
       if (!data) return;
-      const res = await queryClient.fetchQuery(createPost({ data, caption }));
+      const res = await queryClient.fetchQuery(createPost({ data, caption, keywords: kwds }));
       router.invalidate();
       if (!res) alert("Couldn't post");
       else router.navigate({ to: `/posts/${res?.id}` });
@@ -60,6 +63,22 @@ function CreatePostPage() {
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="caption" className="block text-gray-700">
+              Keywords:
+            </label>
+            <input
+              type="text"
+              name="caption"
+              placeholder="Enter keywords separated by commas"
+              className="w-full mt-2 p-2 border border-gray-300 rounded-md hover:border-yellow-500 transition duration-200 ease-in"
+              value={keywords}
+              onChange={e => {
+                e.preventDefault();
+                setKeywords(e.target.value);
+              }}
+            />
+          </div>
+          <div className="mb-4">
             <label htmlFor="image" className="block text-gray-700">
               Image:
             </label>
@@ -75,7 +94,7 @@ function CreatePostPage() {
             onClick={handleCreatePost}
             className="w-1/3 py-2 px-4 bg-gray-800 text-white font-semibold rounded-md hover:bg-yellow-500 transition duration-300"
           >
-            Update
+            Post
           </button>
 				</div>
       </div>
