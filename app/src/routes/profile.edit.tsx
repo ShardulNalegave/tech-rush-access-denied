@@ -133,6 +133,7 @@ function EditProfilePage() {
             </label>
             <input
               type="file"
+              accept="image/*"
               name="image"
               placeholder="Enter image URL"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md  hover:border-yellow-500 transition duration-300"

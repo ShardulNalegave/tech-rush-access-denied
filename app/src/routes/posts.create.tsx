@@ -14,6 +14,7 @@ function CreatePostPage() {
   const [caption, setCaption] = useState('');
   const [keywords, setKeywords] = useState('');
   const postPicRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   const handleCreatePost = () => {
     const kwds = keywords.split(',').map(s => s.trim());
@@ -84,18 +85,31 @@ function CreatePostPage() {
             </label>
             <input
               type="file"
+              accept="image/*"
               name="image"
               placeholder="Enter image URL"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md  hover:border-yellow-500 transition duration-300"
               ref={postPicRef}
+              onChange={() => {
+                const files = postPicRef.current?.files;
+                if (files === null || files === undefined) return;
+                if (files.length < 1) return;
+                setPreview(URL.createObjectURL(files[0]));
+              }}
             />
           </div>
           <button
             onClick={handleCreatePost}
             className="w-1/3 py-2 px-4 bg-gray-800 text-white font-semibold rounded-md hover:bg-yellow-500 transition duration-300"
           >
-            Post
+            Upload
           </button>
+          <div className='h-[50px]'></div>
+          {
+            preview != null ?
+            <img src={preview} className='rounded-lg shadow-lg h-[250px]' />
+            : <></>
+          }
 				</div>
       </div>
 		</div>
