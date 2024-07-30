@@ -11,6 +11,7 @@ Mosaicify is a Photo Gallery and sharing app built as our project for the PISC (
 1. Install pre-requisites
    - PostgreSQL
    - Redis
+   - Meilisearch
    - Go
    - Node + npm
 2. Clone the repo
@@ -20,6 +21,8 @@ Mosaicify is a Photo Gallery and sharing app built as our project for the PISC (
    - `MOSAICIFY_REDIS_ADDR` - Address where Redis is hosted
    - `MOSAICIFY_REDIS_DB` - Redis DB
    - `MOSAICIFY_REDIS_PASS` - Redis password
+   - `MOSAICIFY_MEILISEARCH_ADDR` - Address where meilisearch is hosted
+   - `MOSAICIFY_MEILISEARCH_MASTER_KEY` - Meilisearch master-key
    - `MOSAICIFY_AUTH_HASH_KEY` - Cookie encryption hash key (at least 32 bytes long)
    - `MOSAICIFY_AUTH_BLOCK_KEY` - Cookie encryption block key (16 or 32 bytes long)
 4. In the directory specified in `MOSAICIFY_STORAGE_DIR`, create two sub-directories named `profile_pics` and `posts`. And also store a default profile picture for users by saving it as `defaultProfilePic` (no extension) and saving it in `MOSAICIFY_STORAGE_DIR`

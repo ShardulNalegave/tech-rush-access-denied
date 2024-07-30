@@ -18,7 +18,7 @@ function UserProfiles() {
       <div className='flex-none h-full'>
         <ExploreSidebar />
       </div>
-      <div className='grow h-full'>
+      <div className='grow h-full overflow-y-auto'>
         <div className='w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[25px]'>
           {users.map(user => (
             <Link to={`/profile/${user.id}`} key={user.id}>

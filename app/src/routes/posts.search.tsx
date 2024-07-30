@@ -15,7 +15,6 @@ function SearchPostsPage() {
 
   const searchForQuery = async () => {
     const res = await queryClient.fetchQuery(searchPosts(query));
-    console.log(res);
     setPosts(res || []);
   };
 

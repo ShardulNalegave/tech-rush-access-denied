@@ -27,6 +27,9 @@ export default function Navbar() {
 
   const unauthLinks = (
     <>
+      <Link to='/posts/search' className="[&.active]:border-b-2 border-yellow-500 mx-[10px] font-heading text-lg">Search</Link>
+      <Link to='/posts' className="[&.active]:border-b-2 border-yellow-500 mx-[10px] font-heading text-lg">Posts</Link>
+      <Link to='/profile' className="[&.active]:border-b-2 border-yellow-500 mx-[10px] font-heading text-lg">Users</Link>
       <Link to='/auth/login' className="[&.active]:border-b-2 border-yellow-500 mx-[10px] font-heading text-lg">Login</Link>
       <Link to='/auth/signup' className="[&.active]:border-b-2 border-yellow-500 mx-[10px] font-heading text-lg">Sign Up</Link>
     </>
@@ -72,6 +75,21 @@ export default function Navbar() {
 
   const unauthLinksMobile = (
     <>
+      <Link to='/posts/search' onClick={() => setMenuOpen(false)}>
+        <div className='rounded-lg border-solid border-[1px] border-zinc-50 border-opacity-50 p-[20px] font-heading mb-[10px] cursor-pointer'>
+          Search
+        </div>
+      </Link>
+      <Link to='/posts' onClick={() => setMenuOpen(false)}>
+        <div className='rounded-lg border-solid border-[1px] border-zinc-50 border-opacity-50 p-[20px] font-heading mb-[10px] cursor-pointer'>
+          Posts
+        </div>
+      </Link>
+      <Link to='/profile' onClick={() => setMenuOpen(false)}>
+        <div className='rounded-lg border-solid border-[1px] border-zinc-50 border-opacity-50 p-[20px] font-heading mb-[10px] cursor-pointer'>
+          Users
+        </div>
+      </Link>
       <Link to='/auth/login' onClick={() => setMenuOpen(false)}>
         <div className='rounded-lg border-solid border-[1px] border-zinc-50 border-opacity-50 p-[20px] font-heading mb-[10px] cursor-pointer'>
           Login

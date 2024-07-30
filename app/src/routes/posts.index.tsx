@@ -18,7 +18,7 @@ function PostsPage() {
       <div className='flex-none h-full'>
         <ExploreSidebar />
       </div>
-      <div className='grow h-full'>
+      <div className='grow h-full overflow-y-auto'>
         <ImageGrid posts={posts} emptyMsg={{ title: 'No posts', desc: '' }} />
       </div>
     </div>

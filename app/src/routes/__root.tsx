@@ -5,6 +5,7 @@ import { queryClient } from '../query/query';
 import { getLoggedInUser } from '../query/users';
 import Navbar from '../components/navbar';
 import NotFound from '../components/notFound';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -14,6 +15,7 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   const loc = useLocation();
+  const { isPending, data } = useQuery(getLoggedInUser());
 
   return (
     <div className='h-screen w-screen overflow-x-hidden overflow-y-hidden flex flex-col'>
@@ -22,7 +24,7 @@ function RootLayout() {
         <Outlet />
       </div>
 
-      <div className='fixed bottom-0 right-0 flex flex-col p-[15px]'>
+      <div className={`fixed bottom-0 right-0 flex flex-col p-[15px] ${!isPending && data ? 'block' : 'hidden'}`}>
         <Link to='/posts/create' className={`bg-yellow-600 p-[20px] rounded-2xl text-center justify-center shadow-lg ${loc.pathname === '/posts/create' ? 'hidden' : 'block'}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

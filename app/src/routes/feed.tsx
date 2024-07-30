@@ -18,7 +18,7 @@ function FeedPage() {
       <div className='flex-none h-full'>
         <ExploreSidebar />
       </div>
-      <div className='grow h-full'>
+      <div className='grow h-full overflow-y-auto'>
         <ImageGrid posts={data || []} emptyMsg={{
           title: 'Empty Feed!',
           desc: 'Follow more people and their posts will show up here'
